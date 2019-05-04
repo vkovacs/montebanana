@@ -15,5 +15,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
-
 mainClassName = 'hu.crs.montebanana.App'
