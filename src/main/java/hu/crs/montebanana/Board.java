@@ -4,6 +4,7 @@ import hu.crs.montebanana.pieces.IllegalLocationException;
 import hu.crs.montebanana.pieces.Player;
 
 import java.util.List;
+import java.util.function.IntBinaryOperator;
 
 import static java.lang.String.format;
 
@@ -12,24 +13,23 @@ public class Board {
     private List<Player> players = List.of(new Player());
     private Player[] mountain = new Player[13];
 
-    public void stepLeft(Player player, int steps) {
-        int location = player.getLocation() - Math.abs(steps);
-        if (location < 0) throw new IllegalLocationException();
+    void stepLeft(Player player, int steps) {
+        step(player, steps, (a, b) -> a - b);
+    }
+
+    void stepRight(Player player, int steps) {
+        step(player, steps, Integer::sum);
+    }
+
+    private void step(Player player, int step, IntBinaryOperator op) {
+        int location = op.applyAsInt(player.getLocation(), step);
+        if (location < 0 || location > 12) throw new IllegalLocationException();
         if (player.getLocation() > -1) mountain[player.getLocation()] = null;
         player.setLocation(location);
         mountain[player.getLocation()] = player;
-
     }
 
-    public void stepRight(Player player, int steps) {
-        int location = player.getLocation() + Math.abs(steps);
-        if (location > 12) throw new IllegalLocationException();
-        if (player.getLocation() > -1) mountain[player.getLocation()] = null;
-        player.setLocation(location);
-        mountain[player.getLocation()] = player;
-    }
-
-    public int nextTurn() {
+    int nextTurn() {
         return turn++;
     }
 
@@ -52,11 +52,11 @@ public class Board {
         return stringBuilder.toString();
     }
 
-    public int getTurn() {
+    int getTurn() {
         return turn;
     }
 
-    public List<Player> getPlayers() {
+    List<Player> getPlayers() {
         return players;
     }
 }

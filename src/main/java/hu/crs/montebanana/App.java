@@ -3,7 +3,6 @@ package hu.crs.montebanana;
 import hu.crs.montebanana.pieces.IllegalLocationException;
 import hu.crs.montebanana.pieces.Player;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
@@ -36,14 +35,4 @@ public class App {
         }
 
     }
-
-    private static String toString(char[] array) {
-        StringBuilder stringBuilder = new StringBuilder(26);
-        for (char c : array) {
-            if (c == '@') stringBuilder.append("@ ");
-            else stringBuilder.append("  ");
-        }
-        return stringBuilder.toString();
-    }
-
 }
