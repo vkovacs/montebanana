@@ -1,39 +1,37 @@
 package hu.crs.montebanana;
 
+import hu.crs.montebanana.pieces.IllegalLocationException;
+import hu.crs.montebanana.pieces.Player;
+
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class App {
 
-    //TODO: terminal raw mode https://www.darkcoding.net/software/non-blocking-console-io-is-not-possible/
     public static void main(String[] args) {
-        int turn = 1;
-        Set<Integer> availableCards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
-        char[] mountain = new char[13];
+        Board board = new Board();
+        Player player = board.getPlayers().get(0);
 
-        int monkeyIndex = -1;
-        int newMonkeyIndex = -1;
         Scanner in = new Scanner(System.in);
-        while (availableCards.size() > 0) {
-            System.out.println("Turn: " + turn);
-
-            if (monkeyIndex >= 0) mountain[monkeyIndex] = '@';
-            System.out.println(toString(mountain));
-            System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _");
+        while (board.getTurn() < 5) {
+            System.out.println(board.toString());
 
             String command = in.nextLine();
-            System.out.println(Arrays.toString(command.split(" ")));
             int stepCount = Math.abs(Integer.parseInt(command.split(" ")[0]));
             char stepDirection = Character.toLowerCase(command.split(" ")[1].charAt(0));
-            if (monkeyIndex >= 0) mountain[monkeyIndex] = ' ';
+            try {
+                if (stepDirection == 'r') {
+                    board.stepRight(player, stepCount);
+                } else {
+                    board.stepLeft(player, stepCount);
+                }
+            } catch (IllegalLocationException e) {
+                System.out.println("Illegal location!");
+                in.nextLine();
+                continue;
+            }
 
-            newMonkeyIndex = (stepDirection == 'r' ? monkeyIndex + stepCount : monkeyIndex - stepCount);
-            if (newMonkeyIndex < 0 || newMonkeyIndex > 12) continue;
-
-            monkeyIndex = newMonkeyIndex;
-            turn++;
+            board.nextTurn();
             System.out.println("\033[H\033[2J");
         }
 
