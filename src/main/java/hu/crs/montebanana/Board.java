@@ -3,15 +3,21 @@ package hu.crs.montebanana;
 import hu.crs.montebanana.pieces.IllegalLocationException;
 import hu.crs.montebanana.pieces.Player;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.IntBinaryOperator;
 
 import static java.lang.String.format;
 
 public class Board {
     private int turn = 1;
-    private List<Player> players = List.of(new Player());
+    private List<Player> players = List.of(new Player(0));
     private Player[] mountain = new Player[13];
+    private Map<Integer, Integer> playerLocation = new HashMap<>();
+    {
+        playerLocation.put(0, -1);
+    }
 
     void stepLeft(Player player, int steps) {
         step(player, steps, (a, b) -> a - b);
@@ -22,11 +28,11 @@ public class Board {
     }
 
     private void step(Player player, int step, IntBinaryOperator op) {
-        int location = op.applyAsInt(player.getLocation(), step);
-        if (location < 0 || location > 12) throw new IllegalLocationException();
-        if (player.getLocation() > -1) mountain[player.getLocation()] = null;
-        player.setLocation(location);
-        mountain[player.getLocation()] = player;
+        int newLocation = op.applyAsInt(location(player), step);
+        if (newLocation < 0 || newLocation > 12) throw new IllegalLocationException();
+        if (location(player) > -1) mountain[location(player)] = null;
+        playerLocation.put(player.getId(), newLocation);
+        mountain[playerLocation.get(player.getId())] = player;
     }
 
     int nextTurn() {
@@ -58,5 +64,9 @@ public class Board {
 
     List<Player> getPlayers() {
         return players;
+    }
+
+    private int location(Player player) {
+        return playerLocation.get(player.getId());
     }
 }
