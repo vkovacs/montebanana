@@ -1,13 +1,16 @@
 package hu.crs.montebanana;
 
 import hu.crs.montebanana.pieces.Player;
+import tool.Color;
 
 import java.util.Scanner;
 
+import static tool.ColorTools.colorText;
+
 public class App {
     private int turn = 1;
-    Board board = new Board();
-    Player player = board.getPlayers().get(0);
+    private final Board board = new Board();
+    private final Player player = board.getPlayers().get(0);
 
     public static void main(String[] args) {
         App app = new App();
@@ -27,13 +30,14 @@ public class App {
                     app.board.stepLeft(app.player, stepCount);
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(colorText(e.getMessage(), Color.RED));
+                System.out.println();
                 in.nextLine();
                 continue;
             }
 
             app.turn++;
-            System.out.println("\033[H\033[2J");
+            colorText("", Color.RESET);
         }
 
         System.out.println(app.board.toString());

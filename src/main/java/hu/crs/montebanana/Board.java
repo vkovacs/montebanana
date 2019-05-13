@@ -4,11 +4,11 @@ import hu.crs.montebanana.pieces.IllegalLocationException;
 import hu.crs.montebanana.pieces.IllegalStepException;
 import hu.crs.montebanana.pieces.Player;
 import lombok.Getter;
+import tool.Color;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.IntBinaryOperator;
 
 import static java.lang.String.format;
@@ -16,7 +16,7 @@ import static java.lang.String.format;
 public class Board {
 
     @Getter
-    private final List<Player> players = List.of(new Player(0, Player.Color.RED));
+    private final List<Player> players = List.of(new Player(0, Color.RED));
     private final Player[] mountain = new Player[13];
     private final Map<Integer, Integer> playerLocation = new HashMap<>();
     {
