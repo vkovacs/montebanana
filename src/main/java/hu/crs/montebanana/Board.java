@@ -12,7 +12,7 @@ import static java.lang.String.format;
 
 public class Board {
     private int turn = 1;
-    private List<Player> players = List.of(new Player(0));
+    private List<Player> players = List.of(new Player(0, Player.Color.RED));
     private Player[] mountain = new Player[13];
     private Map<Integer, Integer> playerLocation = new HashMap<>();
     {
@@ -52,7 +52,7 @@ public class Board {
     private static String toString(Player[] players) {
         StringBuilder stringBuilder = new StringBuilder(26);
         for (Player c : players) {
-            if (c != null) stringBuilder.append("@ ");
+            if (c != null) stringBuilder.append(c.toString()).append(" ");
             else stringBuilder.append("  ");
         }
         return stringBuilder.toString();
