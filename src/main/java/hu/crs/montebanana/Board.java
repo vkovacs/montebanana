@@ -44,8 +44,6 @@ public class Board {
         }
     }
 
-
-
     @Override
     public String toString() {
 
@@ -57,7 +55,7 @@ public class Board {
                 + stepsLine;
     }
 
-    private static String toString(Player[] players) {
+    private String toString(Player[] players) {
         StringBuilder stringBuilder = new StringBuilder(26);
         for (Player c : players) {
             if (c != null) stringBuilder.append(c.toString()).append(" ");
