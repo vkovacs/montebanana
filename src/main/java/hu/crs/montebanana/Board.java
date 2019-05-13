@@ -2,6 +2,7 @@ package hu.crs.montebanana;
 
 import hu.crs.montebanana.pieces.IllegalLocationException;
 import hu.crs.montebanana.pieces.Player;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +12,12 @@ import java.util.function.IntBinaryOperator;
 import static java.lang.String.format;
 
 public class Board {
+    @Getter
     private int turn = 1;
-    private List<Player> players = List.of(new Player(0, Player.Color.RED));
-    private Player[] mountain = new Player[13];
-    private Map<Integer, Integer> playerLocation = new HashMap<>();
+    @Getter
+    private final List<Player> players = List.of(new Player(0, Player.Color.RED));
+    private final Player[] mountain = new Player[13];
+    private final Map<Integer, Integer> playerLocation = new HashMap<>();
     {
         playerLocation.put(0, -1);
     }
@@ -56,14 +59,6 @@ public class Board {
             else stringBuilder.append("  ");
         }
         return stringBuilder.toString();
-    }
-
-    int getTurn() {
-        return turn;
-    }
-
-    List<Player> getPlayers() {
-        return players;
     }
 
     private int location(Player player) {
