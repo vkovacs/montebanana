@@ -17,6 +17,7 @@ public class Player {
     private final int id;
     @Getter
     private final Set<Integer> availableSteps = new TreeSet<>(Arrays.asList(1,2,3,4,5));
+    @Getter
     private final Color color;
 
     void removeCard(Integer cardNumber) {

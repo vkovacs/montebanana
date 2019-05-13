@@ -6,6 +6,7 @@ import tool.Color;
 import java.util.List;
 
 import static java.lang.String.format;
+import static tool.ColorTools.colorText;
 
 public class Board {
 
@@ -26,7 +27,7 @@ public class Board {
         String availableStepsLine = format("Available steps: %s", players.get(0).getAvailableSteps());
         String mountainLine = mountain.toString();
         String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
-        return availableStepsLine + "\n"
+        return colorText(availableStepsLine + "\n", players.get(0).getColor())
                 + mountainLine + "\n"
                 + stepsLine;
     }
