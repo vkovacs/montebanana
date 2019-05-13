@@ -19,6 +19,7 @@ public class Player {
 
     @Getter
     private final int id;
+    @Getter
     private final Set<Integer> availableCards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
     private final Color color;
 

@@ -1,6 +1,5 @@
 package hu.crs.montebanana;
 
-import hu.crs.montebanana.pieces.IllegalLocationException;
 import hu.crs.montebanana.pieces.Player;
 
 import java.util.Scanner;
@@ -12,7 +11,7 @@ public class App {
         Player player = board.getPlayers().get(0);
 
         Scanner in = new Scanner(System.in);
-        while (board.getTurn() < 5) {
+        while (board.getTurn() <= 5) {
             System.out.println(board.toString());
 
             String command = in.nextLine();
@@ -24,8 +23,8 @@ public class App {
                 } else {
                     board.stepLeft(player, stepCount);
                 }
-            } catch (IllegalLocationException e) {
-                System.out.println("Illegal location!");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
                 in.nextLine();
                 continue;
             }
@@ -34,5 +33,6 @@ public class App {
             System.out.println("\033[H\033[2J");
         }
 
+        System.out.println(board.toString());
     }
 }

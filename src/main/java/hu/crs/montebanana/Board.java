@@ -1,12 +1,14 @@
 package hu.crs.montebanana;
 
 import hu.crs.montebanana.pieces.IllegalLocationException;
+import hu.crs.montebanana.pieces.IllegalStepException;
 import hu.crs.montebanana.pieces.Player;
 import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.IntBinaryOperator;
 
 import static java.lang.String.format;
@@ -31,11 +33,16 @@ public class Board {
     }
 
     private void step(Player player, int step, IntBinaryOperator op) {
-        int newLocation = op.applyAsInt(location(player), step);
-        if (newLocation < 0 || newLocation > 12) throw new IllegalLocationException();
-        if (location(player) > -1) mountain[location(player)] = null;
-        playerLocation.put(player.getId(), newLocation);
-        mountain[playerLocation.get(player.getId())] = player;
+        if (player.getAvailableCards().contains(step)) {
+            int newLocation = op.applyAsInt(location(player), step);
+            if (newLocation < 0 || newLocation > 12) throw new IllegalLocationException("Illegal destination index!");
+            if (location(player) > -1) mountain[location(player)] = null;
+            playerLocation.put(player.getId(), newLocation);
+            mountain[playerLocation.get(player.getId())] = player;
+            player.removeCard(step);
+        } else {
+            throw new IllegalStepException("Step has been already played!");
+        }
     }
 
     int nextTurn() {
@@ -45,9 +52,11 @@ public class Board {
     @Override
     public String toString() {
         String turnLine = format("Turn: %d", turn);
+        String cards = format("Available cards: %s", players.get(0).getAvailableCards());
         String mountainLine = toString(mountain);
         String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
         return turnLine + "\n"
+                + cards + "\n"
                 + mountainLine + "\n"
                 + stepsLine;
     }
