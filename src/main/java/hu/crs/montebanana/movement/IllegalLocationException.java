@@ -1,4 +1,4 @@
-package hu.crs.montebanana.pieces;
+package hu.crs.montebanana.movement;
 
 public class IllegalLocationException extends RuntimeException {
     public IllegalLocationException(String message) {

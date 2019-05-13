@@ -1,7 +1,5 @@
-package hu.crs.montebanana;
+package hu.crs.montebanana.components;
 
-import hu.crs.montebanana.pieces.Mountain;
-import hu.crs.montebanana.pieces.Player;
 import lombok.Getter;
 import tool.Color;
 
@@ -15,22 +13,21 @@ public class Board {
     private final List<Player> players = List.of(new Player(0, Color.RED));
     private final Mountain mountain = new Mountain();
 
-    void stepLeft(Player player, int steps) {
+    public void stepLeft(Player player, int steps) {
         mountain.step(player, steps, (a, b) -> a - b);
     }
 
-    void stepRight(Player player, int steps) {
+    public void stepRight(Player player, int steps) {
         mountain.step(player, steps, Integer::sum);
     }
 
     @Override
     public String toString() {
-        String cards = format("Available cards: %s", players.get(0).getAvailableCards());
+        String availableStepsLine = format("Available steps: %s", players.get(0).getAvailableSteps());
         String mountainLine = mountain.toString();
         String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
-        return cards + "\n"
+        return availableStepsLine + "\n"
                 + mountainLine + "\n"
                 + stepsLine;
     }
-
 }

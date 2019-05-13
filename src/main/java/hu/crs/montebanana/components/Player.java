@@ -1,13 +1,14 @@
-package hu.crs.montebanana.pieces;
+package hu.crs.montebanana.components;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import tool.Color;
-import tool.ColorTools;
 
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
+
+import static tool.ColorTools.colorText;
 
 @AllArgsConstructor
 public class Player {
@@ -15,15 +16,15 @@ public class Player {
     @Getter
     private final int id;
     @Getter
-    private final Set<Integer> availableCards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
+    private final Set<Integer> availableSteps = new TreeSet<>(Arrays.asList(1,2,3,4,5));
     private final Color color;
 
-    public void removeCard(Integer cardNumber) {
-        availableCards.remove(cardNumber);
+    void removeCard(Integer cardNumber) {
+        availableSteps.remove(cardNumber);
     }
 
     @Override
     public String toString() {
-        return ColorTools.colorText("@", color);
+        return colorText("@", color);
     }
 }

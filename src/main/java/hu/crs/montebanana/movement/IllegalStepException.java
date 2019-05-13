@@ -1,4 +1,4 @@
-package hu.crs.montebanana.pieces;
+package hu.crs.montebanana.movement;
 
 public class IllegalStepException extends RuntimeException {
     public IllegalStepException(String message) {

@@ -1,4 +1,7 @@
-package hu.crs.montebanana.pieces;
+package hu.crs.montebanana.components;
+
+import hu.crs.montebanana.movement.IllegalLocationException;
+import hu.crs.montebanana.movement.IllegalStepException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,8 +14,8 @@ public class Mountain {
         playerLocation.put(0, -1);
     }
 
-    public void step(Player player, int step, IntBinaryOperator op) {
-        if (player.getAvailableCards().contains(step)) {
+    void step(Player player, int step, IntBinaryOperator op) {
+        if (player.getAvailableSteps().contains(step)) {
             int oldLocation = location(player);
             int newLocation = op.applyAsInt(oldLocation, step);
             if (newLocation < 0 || newLocation > 12) throw new IllegalLocationException("Illegal destination index!");

@@ -1,6 +1,7 @@
 package hu.crs.montebanana;
 
-import hu.crs.montebanana.pieces.Player;
+import hu.crs.montebanana.components.Board;
+import hu.crs.montebanana.components.Player;
 import tool.Color;
 
 import java.util.Scanner;
