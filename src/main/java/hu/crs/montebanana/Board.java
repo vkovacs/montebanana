@@ -14,8 +14,7 @@ import java.util.function.IntBinaryOperator;
 import static java.lang.String.format;
 
 public class Board {
-    @Getter
-    private int turn = 1;
+
     @Getter
     private final List<Player> players = List.of(new Player(0, Player.Color.RED));
     private final Player[] mountain = new Player[13];
@@ -45,18 +44,15 @@ public class Board {
         }
     }
 
-    int nextTurn() {
-        return turn++;
-    }
+
 
     @Override
     public String toString() {
-        String turnLine = format("Turn: %d", turn);
+
         String cards = format("Available cards: %s", players.get(0).getAvailableCards());
         String mountainLine = toString(mountain);
         String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
-        return turnLine + "\n"
-                + cards + "\n"
+        return cards + "\n"
                 + mountainLine + "\n"
                 + stepsLine;
     }
