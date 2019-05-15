@@ -9,16 +9,14 @@ import java.util.Scanner;
 import static tool.ColorTools.colorText;
 
 public class App {
-    private int turn = 1;
     private final Board board = new Board();
-    private final Player player = board.getPlayers().get(0);
 
     public static void main(String[] args) {
         App app = new App();
+        Player actualPlayer = app.board.actualPlayer();
 
         Scanner in = new Scanner(System.in);
-        while (app.turn <= 5) {
-            System.out.println(app.showStatus());
+        while (app.board.playersHaveSteps()) {
             System.out.println(app.board.toString());
 
             String command = in.nextLine();
@@ -26,9 +24,9 @@ public class App {
             char stepDirection = Character.toLowerCase(command.split(" ")[1].charAt(0));
             try {
                 if (stepDirection == 'r') {
-                    app.board.stepRight(app.player, stepCount);
+                    app.board.stepRight(actualPlayer, stepCount);
                 } else {
-                    app.board.stepLeft(app.player, stepCount);
+                    app.board.stepLeft(actualPlayer, stepCount);
                 }
             } catch (Exception e) {
                 System.out.println(colorText(e.getMessage(), Color.RED));
@@ -37,14 +35,13 @@ public class App {
                 continue;
             }
 
-            app.turn++;
             colorText("", Color.RESET);
+            actualPlayer = app.board.nextPlayer();
         }
 
         System.out.println(app.board.toString());
+
+        System.out.println(app.board.winnerToString());
     }
 
-    private String showStatus() {
-        return "Turn: " + turn;
-    }
 }

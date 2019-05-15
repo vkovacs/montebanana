@@ -1,29 +1,62 @@
 package hu.crs.montebanana.components;
 
+import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.IllegalStepException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.IntBinaryOperator;
+import java.util.Optional;
+
+import static hu.crs.montebanana.movement.Direction.RIGHT;
 
 public class Mountain {
     private final Player[] mountain = new Player[13];
     private final Map<Integer, Integer> playerLocation = new HashMap<>();
+
     {
         playerLocation.put(0, -1);
+        playerLocation.put(1, -1);
     }
 
-    void step(Player player, int step, IntBinaryOperator op) {
-        if (player.getAvailableSteps().contains(step)) {
+    void step(Player player, int steps, Direction direction) {
+        if (player.getAvailableSteps().contains(steps)) {
             int oldLocation = location(player);
-            int newLocation = op.applyAsInt(oldLocation, step);
-            if (newLocation < 0 || newLocation > 12) throw new IllegalLocationException("Illegal destination index!");
+
+            int newLocation = findNextEmptyLocation(oldLocation, steps, direction);
+
             move(player, oldLocation, newLocation);
-            player.removeCard(step);
+            player.removeCard(steps);
         } else {
             throw new IllegalStepException("Step has been already played!");
         }
+    }
+
+    private int findNextEmptyLocation(int newLocation, int steps, Direction direction) {
+        int stepCount = 0;
+        if (RIGHT == direction) {
+            while (newLocation < 12 && stepCount < steps) {
+                newLocation++;
+                if (mountain[newLocation] == null) {
+                    stepCount++;
+                }
+            }
+            if (stepCount == steps) {
+                return newLocation;
+            }
+        } else {
+            while (newLocation > 0 && stepCount < steps) {
+                newLocation--;
+                if (mountain[newLocation] == null) {
+                    stepCount++;
+                }
+            }
+            if (stepCount == steps) {
+                return newLocation;
+            }
+        }
+
+        throw new IllegalLocationException("No available position present!");
     }
 
     private void move(Player player, int from, int to) {
@@ -34,6 +67,14 @@ public class Mountain {
 
     private int location(Player player) {
         return playerLocation.get(player.getId());
+    }
+
+    Integer winnerId() {
+        Optional<Map.Entry<Integer, Integer>> maxEntry = playerLocation.entrySet().stream().max(Map.Entry.comparingByKey());
+        if (maxEntry.isPresent()) {
+            return maxEntry.get().getKey();
+        }
+        throw new RuntimeException("No max entry is available!");
     }
 
     @Override

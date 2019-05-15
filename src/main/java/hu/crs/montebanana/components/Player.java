@@ -22,6 +22,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return colorText("\3 uD83D\uDC35", color);
+        //return colorText("\3 uD83D\uDC35", color);
+        return colorText("@", color);
     }
 }
