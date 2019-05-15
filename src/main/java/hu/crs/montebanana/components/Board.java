@@ -3,6 +3,7 @@ package hu.crs.montebanana.components;
 import lombok.Getter;
 import tool.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static hu.crs.montebanana.movement.Direction.LEFT;
@@ -13,7 +14,7 @@ import static tool.ColorTools.colorText;
 public class Board {
 
     @Getter
-    private final List<Player> players = List.of(new Player(0, Color.RED), new Player(1, Color.BLUE));
+    private final List<Player> players = new ArrayList<>();
     private final Mountain mountain = new Mountain();
     private int actualPlayerIndex = 0;
 
@@ -42,12 +43,15 @@ public class Board {
         return players.stream().map(player -> player.getAvailableSteps().size()).reduce(0, Integer::sum) > 0;
     }
 
-    public String winnerToString() {
+    public Player winner() {
         Integer winnerId = mountain.winnerId();
-        Player winner = players.stream().filter(p -> p.getId() == winnerId).findFirst().orElseThrow(() -> new RuntimeException("No player by id!"));
 
-        return colorText("The winner is: " + winner.toString(), winner.getColor());
+        return players.stream().filter(p -> p.getId() == winnerId).findFirst().orElseThrow(() -> new RuntimeException("No player by id!"));
+    }
 
+    public void registerPlayer(Player player) {
+        players.add(player);
+        mountain.registerPlayer(player);
     }
 
     @Override

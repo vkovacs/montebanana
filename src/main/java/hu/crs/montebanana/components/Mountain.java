@@ -14,11 +14,6 @@ public class Mountain {
     private final Player[] mountain = new Player[13];
     private final Map<Integer, Integer> playerLocation = new HashMap<>();
 
-    {
-        playerLocation.put(0, -1);
-        playerLocation.put(1, -1);
-    }
-
     void step(Player player, int steps, Direction direction) {
         if (player.getAvailableSteps().contains(steps)) {
             int oldLocation = location(player);
@@ -75,6 +70,10 @@ public class Mountain {
             return maxEntry.get().getKey();
         }
         throw new RuntimeException("No max entry is available!");
+    }
+
+    void registerPlayer(Player player) {
+        playerLocation.put(player.getId(), -1);
     }
 
     @Override
