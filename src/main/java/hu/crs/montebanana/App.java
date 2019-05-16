@@ -2,8 +2,10 @@ package hu.crs.montebanana;
 
 import hu.crs.montebanana.components.Board;
 import hu.crs.montebanana.components.Player;
+import lombok.Value;
 import tool.Color;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static tool.ColorTools.colorText;
@@ -23,17 +25,15 @@ public class App {
         while (app.board.playersHaveSteps()) {
             System.out.println(app.board.toString());
 
-            String command = in.nextLine();
-            int stepCount = Math.abs(Integer.parseInt(command.split(" ")[0]));
-            char stepDirection = Character.toLowerCase(command.split(" ")[1].charAt(0));
+            MovementInput movementInput = app.readMovementInput(in);
             try {
-                if (stepDirection == 'r') {
-                    app.board.stepRight(actualPlayer, stepCount);
+                if (movementInput.getStepDirection() == 'r') {
+                    app.board.stepRight(actualPlayer, movementInput.stepCount);
                 } else {
-                    app.board.stepLeft(actualPlayer, stepCount);
+                    app.board.stepLeft(actualPlayer, movementInput.getStepCount());
                 }
             } catch (Exception e) {
-                System.out.println(colorText(e.getMessage(), Color.RED));
+                System.out.println(error(e.getMessage()));
                 System.out.println();
                 in.nextLine();
                 continue;
@@ -46,6 +46,34 @@ public class App {
         System.out.println(app.board.toString());
 
         System.out.println(app.winnerToString());
+    }
+
+    private MovementInput readMovementInput(Scanner in) {
+        try {
+            String command = in.nextLine();
+            int stepCount = Math.abs(Integer.parseInt(command.split(" ")[0]));
+            char stepDirection = Character.toLowerCase(command.split(" ")[1].charAt(0));
+
+            return new MovementInput(stepCount, stepDirection);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(error("Incorrect input! Try again!"));
+            readMovementInput(in);
+        } catch (NoSuchElementException e) {
+            System.out.println("Bye!");
+            System.exit(0);
+        }
+
+        throw new RuntimeException("Cannot be reached!");
+    }
+
+    private static String error(String message) {
+        return colorText(message, Color.RED_BOLD);
+    }
+
+    @Value
+    private static class MovementInput {
+        private int stepCount;
+        private char stepDirection;
     }
 
     private String winnerToString() {
