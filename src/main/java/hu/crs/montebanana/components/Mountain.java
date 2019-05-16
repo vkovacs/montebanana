@@ -65,9 +65,9 @@ public class Mountain {
     }
 
     Integer winnerId() {
-        Optional<Map.Entry<Integer, Integer>> maxEntry = playerLocation.entrySet().stream().max(Map.Entry.comparingByKey());
-        if (maxEntry.isPresent()) {
-            return maxEntry.get().getKey();
+        Optional<Map.Entry<Integer, Integer>> maxValueEntry = playerLocation.entrySet().stream().max(Map.Entry.comparingByValue());
+        if (maxValueEntry.isPresent()) {
+            return maxValueEntry.get().getKey();
         }
         throw new RuntimeException("No max entry is available!");
     }
