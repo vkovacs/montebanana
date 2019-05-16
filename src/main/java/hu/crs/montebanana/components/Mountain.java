@@ -76,11 +76,10 @@ public class Mountain {
         playerLocation.put(player.getId(), -1);
     }
 
-    @Override
-    public String toString() {
+    String asString() {
         StringBuilder stringBuilder = new StringBuilder(26);
         for (Player c : mountain) {
-            if (c != null) stringBuilder.append(c.toString()).append(" ");
+            if (c != null) stringBuilder.append(c.asString()).append(" ");
             else stringBuilder.append("  ");
         }
         return stringBuilder.toString();

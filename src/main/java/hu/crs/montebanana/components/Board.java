@@ -1,7 +1,6 @@
 package hu.crs.montebanana.components;
 
 import lombok.Getter;
-import tool.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +53,13 @@ public class Board {
         mountain.registerPlayer(player);
     }
 
-    @Override
-    public String toString() {
+    public void reset() {
+        players.forEach(Player::reset);
+    }
+
+    public String asString() {
         String availableStepsLine = format("Available steps: %s", actualPlayer().getAvailableSteps());
-        String mountainLine = mountain.toString();
+        String mountainLine = mountain.asString();
         String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
         return colorText(availableStepsLine + "\n", actualPlayer().getColor())
                 + mountainLine + "\n"
