@@ -15,12 +15,12 @@ import static tool.ColorTools.colorText;
 public class Player {
 
     private final int id;
-    private final Set<Integer> availableSteps = new TreeSet<>(Arrays.asList(1,2,3,4,5));
+    private final Set<Integer> cards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
     private final Color color;
     private int bananas = 0;
 
     void removeCard(Integer cardNumber) {
-        availableSteps.remove(cardNumber);
+        cards.remove(cardNumber);
     }
 
     public void win() {
@@ -29,7 +29,7 @@ public class Player {
 
     void reset() {
         for (int i = 1; i < 6; i++) {
-            availableSteps.add(i);
+            cards.add(i);
         }
     }
 

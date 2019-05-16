@@ -10,43 +10,43 @@ import java.util.Optional;
 
 import static hu.crs.montebanana.movement.Direction.RIGHT;
 
-public class Mountain {
+class Mountain {
     private final Player[] mountain = new Player[13];
     private final Map<Integer, Integer> playerLocation = new HashMap<>();
 
-    void step(Player player, int steps, Direction direction) {
-        if (player.getAvailableSteps().contains(steps)) {
+    void step(Player player, int card, Direction direction) {
+        if (player.getCards().contains(card)) {
             int oldLocation = location(player);
 
-            int newLocation = findNextEmptyLocation(oldLocation, steps, direction);
+            int newLocation = findNextEmptyLocation(oldLocation, card, direction);
 
             move(player, oldLocation, newLocation);
-            player.removeCard(steps);
+            player.removeCard(card);
         } else {
             throw new IllegalStepException("Step has been already played!");
         }
     }
 
-    private int findNextEmptyLocation(int newLocation, int steps, Direction direction) {
+    private int findNextEmptyLocation(int newLocation, int card, Direction direction) {
         int stepCount = 0;
         if (RIGHT == direction) {
-            while (newLocation < 12 && stepCount < steps) {
+            while (newLocation < 12 && stepCount < card) {
                 newLocation++;
                 if (mountain[newLocation] == null) {
                     stepCount++;
                 }
             }
-            if (stepCount == steps) {
+            if (stepCount == card) {
                 return newLocation;
             }
         } else {
-            while (newLocation > 0 && stepCount < steps) {
+            while (newLocation > 0 && stepCount < card) {
                 newLocation--;
                 if (mountain[newLocation] == null) {
                     stepCount++;
                 }
             }
-            if (stepCount == steps) {
+            if (stepCount == card) {
                 return newLocation;
             }
         }

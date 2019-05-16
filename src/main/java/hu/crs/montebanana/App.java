@@ -3,6 +3,7 @@ package hu.crs.montebanana;
 import hu.crs.montebanana.components.Board;
 import hu.crs.montebanana.components.Player;
 import hu.crs.montebanana.movement.Direction;
+import lombok.Getter;
 import lombok.Value;
 import tool.Color;
 
@@ -32,9 +33,9 @@ public class App {
                 MovementInput movementInput = app.readMovementInput(in);
                 try {
                     if (movementInput.getDirection() == RIGHT) {
-                        app.board.stepRight(actualPlayer, movementInput.stepCount);
+                        app.board.stepRight(actualPlayer, movementInput.getCard());
                     } else {
-                        app.board.stepLeft(actualPlayer, movementInput.getStepCount());
+                        app.board.stepLeft(actualPlayer, movementInput.getCard());
                     }
                 } catch (Exception e) {
                     System.out.println(error(e.getMessage()));
@@ -82,8 +83,9 @@ public class App {
     }
 
     @Value
+    @Getter
     private static class MovementInput {
-        private int stepCount;
+        private int card;
         private Direction direction;
     }
 }

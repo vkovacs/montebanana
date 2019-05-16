@@ -1,5 +1,6 @@
 package hu.crs.montebanana.components;
 
+import hu.crs.montebanana.movement.IllegalStepException;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -16,14 +17,20 @@ public class Board {
     private final List<Player> players = new ArrayList<>();
     private final Mountain mountain = new Mountain();
     private int actualPlayerIndex = 0;
+    @Getter
+    private int lastCard = -1;
 
 
-    public void stepLeft(Player player, int steps) {
-        mountain.step(player, steps, LEFT);
+    public void stepLeft(Player player, int card) {
+        if (card == lastCard) throw new IllegalStepException("Cannot use the same card as the previous player!");
+        mountain.step(player, card, LEFT);
+        lastCard = card;
     }
 
-    public void stepRight(Player player, int steps) {
-        mountain.step(player, steps, RIGHT);
+    public void stepRight(Player player, int card) {
+        if (card == lastCard) throw new IllegalStepException("Cannot use the same card as the previous player!");
+        mountain.step(player, card, RIGHT);
+        lastCard = card;
     }
 
     public Player actualPlayer() {
@@ -39,7 +46,7 @@ public class Board {
     }
 
     public boolean playersHaveSteps() {
-        return players.stream().map(player -> player.getAvailableSteps().size()).reduce(0, Integer::sum) > 0;
+        return players.stream().map(player -> player.getCards().size()).reduce(0, Integer::sum) > 0;
     }
 
     public Player winner() {
@@ -54,11 +61,12 @@ public class Board {
     }
 
     public void reset() {
+        lastCard = -1;
         players.forEach(Player::reset);
     }
 
     public String asString() {
-        String availableStepsLine = format("Available steps: %s", actualPlayer().getAvailableSteps());
+        String availableStepsLine = format("Available steps: %s", actualPlayer().getCards());
         String mountainLine = mountain.asString();
         String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
         return colorText(availableStepsLine + "\n", actualPlayer().getColor())
