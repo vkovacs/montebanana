@@ -55,7 +55,7 @@ public class Board {
 
     public void newTurn() {
         lastCard = -1;
-        players.forEach(Player::newTurn);
+        players.forEach(Player::getBackAllCards);
     }
 
     public String asString() {
