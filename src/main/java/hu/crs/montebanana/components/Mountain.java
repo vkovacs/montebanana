@@ -3,6 +3,7 @@ package hu.crs.montebanana.components;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.IllegalStepException;
+import hu.crs.montebanana.movement.Movement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +15,14 @@ class Mountain {
     private final Player[] mountain = new Player[13];
     private final Map<Integer, Integer> playerLocation = new HashMap<>();
 
-    void step(Player player, int card, Direction direction) {
-        if (player.getCards().contains(card)) {
+    void step(Player player, Movement movement) {
+        if (player.getCards().contains(movement.getCard())) {
             int oldLocation = location(player);
 
-            int newLocation = findNextEmptyLocation(oldLocation, card, direction);
+            int newLocation = findNextEmptyLocation(oldLocation, movement.getCard(), movement.getDirection());
 
             move(player, oldLocation, newLocation);
-            player.removeCard(card);
+            player.removeCard(movement.getCard());
         } else {
             throw new IllegalStepException("Step has been already played!");
         }

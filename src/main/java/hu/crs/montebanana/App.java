@@ -3,14 +3,12 @@ package hu.crs.montebanana;
 import hu.crs.montebanana.components.Board;
 import hu.crs.montebanana.components.Player;
 import hu.crs.montebanana.movement.Direction;
-import lombok.Getter;
-import lombok.Value;
+import hu.crs.montebanana.movement.Movement;
 import tool.Color;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static hu.crs.montebanana.movement.Direction.RIGHT;
 import static java.lang.String.format;
 import static tool.ColorTools.colorText;
 
@@ -30,13 +28,9 @@ public class App {
             while (app.board.playersHaveSteps()) {
                 System.out.println(app.board.asString());
 
-                MovementInput movementInput = app.readMovementInput(in);
+                Movement movement = app.readMovement(in);
                 try {
-                    if (movementInput.getDirection() == RIGHT) {
-                        app.board.stepRight(actualPlayer, movementInput.getCard());
-                    } else {
-                        app.board.stepLeft(actualPlayer, movementInput.getCard());
-                    }
+                    app.board.step(actualPlayer, movement);
                 } catch (Exception e) {
                     System.out.println(error(e.getMessage()));
                     System.out.println();
@@ -55,7 +49,7 @@ public class App {
         }
     }
 
-    private MovementInput readMovementInput(Scanner in) {
+    private Movement readMovement(Scanner in) {
         int stepCount;
         Direction stepDirection;
         while (true) {
@@ -63,7 +57,7 @@ public class App {
                 String command = in.nextLine();
                 stepCount = Math.abs(Integer.parseInt(command.split(" ")[0]));
                 stepDirection = Direction.valueOfChar(Character.toLowerCase(command.split(" ")[1].charAt(0)));
-                return new MovementInput(stepCount, stepDirection);
+                return new Movement(stepCount, stepDirection);
             } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
                 System.out.println(error("Incorrect input! Try again!"));
             } catch (NoSuchElementException e) {
@@ -81,10 +75,4 @@ public class App {
         return colorText(format("The winner is: %s bananas: %s!", winner.asString(), winner.getBananas()), winner.getColor());
     }
 
-    @Value
-    @Getter
-    private static class MovementInput {
-        private int card;
-        private Direction direction;
-    }
 }

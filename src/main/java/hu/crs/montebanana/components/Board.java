@@ -1,13 +1,12 @@
 package hu.crs.montebanana.components;
 
 import hu.crs.montebanana.movement.IllegalStepException;
+import hu.crs.montebanana.movement.Movement;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static hu.crs.montebanana.movement.Direction.LEFT;
-import static hu.crs.montebanana.movement.Direction.RIGHT;
 import static java.lang.String.format;
 import static tool.ColorTools.colorText;
 
@@ -20,16 +19,10 @@ public class Board {
     @Getter
     private int lastCard = -1;
 
-
-    public void stepLeft(Player player, int card) {
+    public void step(Player player, Movement movement) {
+        int card = movement.getCard();
         if (card == lastCard) throw new IllegalStepException("Cannot use the same card as the previous player!");
-        mountain.step(player, card, LEFT);
-        lastCard = card;
-    }
-
-    public void stepRight(Player player, int card) {
-        if (card == lastCard) throw new IllegalStepException("Cannot use the same card as the previous player!");
-        mountain.step(player, card, RIGHT);
+        mountain.step(player, movement);
         lastCard = card;
     }
 
