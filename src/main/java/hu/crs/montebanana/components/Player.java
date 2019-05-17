@@ -23,7 +23,7 @@ public class Player {
         cards.remove(cardNumber);
     }
 
-    public void win() {
+    public void receiveBanana() {
         ++bananas;
     }
 

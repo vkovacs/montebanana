@@ -43,7 +43,7 @@ public class App {
 
             System.out.println(app.board.asString());
             Player winner = app.board.winner();
-            winner.win();
+            winner.receiveBanana();
             System.out.println(app.winnerToString(winner));
             System.out.println(app.board.getPlayers());
         }
@@ -74,5 +74,4 @@ public class App {
     private String winnerToString(Player winner) {
         return colorText(format("The winner is: %s bananas: %s!", winner.asString(), winner.getBananas()), winner.getColor());
     }
-
 }
