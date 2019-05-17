@@ -4,6 +4,7 @@ import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
+import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +12,10 @@ import java.util.Optional;
 
 import static hu.crs.montebanana.movement.Direction.RIGHT;
 
-class Mountain {
-    private final Player[] mountain = new Player[13];
-    private final Map<Integer, Integer> playerLocation = new HashMap<>();
+@RequiredArgsConstructor
+public class Mountain {
+    private final Player[] mountain;
+    private final Map<Integer, Integer> playerLocation;
 
     void step(Player player, Movement movement) {
         if (player.getCards().contains(movement.getCard())) {

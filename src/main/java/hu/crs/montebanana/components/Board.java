@@ -3,6 +3,7 @@ package hu.crs.montebanana.components;
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,12 @@ import java.util.List;
 import static java.lang.String.format;
 import static tool.ColorTools.colorText;
 
+@RequiredArgsConstructor
 public class Board {
 
     @Getter
-    private final List<Player> players = new ArrayList<>();
-    private final Mountain mountain = new Mountain();
+    private final List<Player> players;
+    private final Mountain mountain;
     private int actualPlayerIndex = 0;
     @Getter
     private int lastCard = -1;

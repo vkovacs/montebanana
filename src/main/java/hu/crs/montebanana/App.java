@@ -1,11 +1,14 @@
 package hu.crs.montebanana;
 
 import hu.crs.montebanana.components.Board;
+import hu.crs.montebanana.components.Mountain;
 import hu.crs.montebanana.components.Player;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
 import tool.Color;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -13,10 +16,12 @@ import static java.lang.String.format;
 import static tool.ColorTools.colorText;
 
 public class App {
-    private final Board board = new Board();
+
+    private Board board;
 
     public static void main(String[] args) {
         App app = new App();
+        app.configuration();
         app.board.registerPlayer(new Player(0, Color.RED));
         app.board.registerPlayer(new Player(1, Color.BLUE));
 
@@ -47,6 +52,11 @@ public class App {
             System.out.println(app.winnerToString(winner));
             System.out.println(app.board.getPlayers());
         }
+    }
+
+    private void configuration() {
+        Mountain mountain = new Mountain(new Player[13], new HashMap<>());
+        board = new Board(new ArrayList<>(), mountain);
     }
 
     private Movement readMovement(Scanner in) {
