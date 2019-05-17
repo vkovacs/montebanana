@@ -40,7 +40,6 @@ public class App {
                 } catch (Exception e) {
                     System.out.println(error(e.getMessage()));
                     System.out.println();
-                    in.nextLine();
                     continue;
                 }
 
