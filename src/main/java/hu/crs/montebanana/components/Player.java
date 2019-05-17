@@ -27,7 +27,7 @@ public class Player {
         ++bananas;
     }
 
-    void reset() {
+    void newTurn() {
         for (int i = 1; i < 6; i++) {
             cards.add(i);
         }

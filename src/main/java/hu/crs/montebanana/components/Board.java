@@ -53,9 +53,9 @@ public class Board {
         mountain.registerPlayer(player);
     }
 
-    public void reset() {
+    public void newTurn() {
         lastCard = -1;
-        players.forEach(Player::reset);
+        players.forEach(Player::newTurn);
     }
 
     public String asString() {

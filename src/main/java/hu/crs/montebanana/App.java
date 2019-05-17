@@ -24,7 +24,7 @@ public class App {
 
         Scanner in = new Scanner(System.in);
         while (true) {
-            app.board.reset();
+            app.board.newTurn();
             while (app.board.playersHaveSteps()) {
                 System.out.println(app.board.asString());
 
