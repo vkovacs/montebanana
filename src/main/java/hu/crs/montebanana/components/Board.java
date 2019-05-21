@@ -7,15 +7,14 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class Board {
+class Board {
 
     @Getter
     private final List<Player> players;
     @Getter
     private final Mountain mountain;
 
-    public void step(Player player, Movement movement) {
-        int card = movement.getCard();
+    void step(Player player, Movement movement) {
         mountain.step(player, movement);
     }
 

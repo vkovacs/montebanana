@@ -17,22 +17,22 @@ public class App {
     private Game game = new Game();
 
     public static void main(String[] args) {
-        App app = new App();
+        Game game = new App().game;
 
-        app.game.registerPlayer(new Player(0, Color.RED));
-        app.game.registerPlayer(new Player(1, Color.BLUE));
+        game.registerPlayer(new Player(0, Color.RED));
+        game.registerPlayer(new Player(1, Color.BLUE));
 
-        Player actualPlayer = app.game.actualPlayer();
+        Player actualPlayer = game.actualPlayer();
 
         Scanner in = new Scanner(System.in);
         while (true) {
-            app.game.newTurn();
-            while (app.game.playersHaveSteps()) {
-                System.out.println(app.game.render());
+            game.newTurn();
+            while (game.playersHaveSteps()) {
+                System.out.println(game.render());
 
-                Movement movement = app.readMovement(in);
+                Movement movement = new App().readMovement(in);
                 try {
-                    app.game.getBoard().step(actualPlayer, movement);
+                    game.step(actualPlayer, movement);
                 } catch (Exception e) {
                     System.out.println(error(e.getMessage()));
                     System.out.println();
@@ -40,14 +40,14 @@ public class App {
                 }
 
                 colorText("", Color.RESET);
-                actualPlayer = app.game.nextPlayer();
+                actualPlayer = game.nextPlayer();
             }
 
-            System.out.println(app.game.render());
-            Player winner = app.game.winner();
+            System.out.println(game.render());
+            Player winner = game.winner();
             winner.receiveBanana();
-            System.out.println(app.winnerToString(winner));
-            System.out.println(app.game.getBoard().getPlayers());
+            System.out.println(new App().winnerToString(winner));
+            System.out.println(game.getPlayers());
         }
     }
 

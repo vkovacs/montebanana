@@ -12,7 +12,7 @@ import java.util.Optional;
 import static hu.crs.montebanana.movement.Direction.RIGHT;
 
 @RequiredArgsConstructor
-public class Mountain {
+class Mountain {
     private final Player[] mountain;
     private final Map<Integer, Integer> playerLocation;
 
@@ -78,7 +78,7 @@ public class Mountain {
         playerLocation.put(player.getId(), -1);
     }
 
-    String asString() {
+    String render() {
         StringBuilder stringBuilder = new StringBuilder(26);
         for (Player c : mountain) {
             if (c != null) stringBuilder.append(c.asString()).append(" ");

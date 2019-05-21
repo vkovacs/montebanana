@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static java.lang.String.format;
 import static tool.ColorTools.colorText;
@@ -61,9 +62,13 @@ public class Game {
         lastCard = movement.getCard();
     }
 
+    public List<Player> getPlayers() {
+        return board.getPlayers();
+    }
+
     public String render() {
         String availableStepsLine = format("Available steps: %s", actualPlayer().getCards());
-        String mountainLine = board.getMountain().asString();
+        String mountainLine = board.getMountain().render();
         String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
         return colorText(availableStepsLine + "\n", actualPlayer().getColor())
                 + mountainLine + "\n"
