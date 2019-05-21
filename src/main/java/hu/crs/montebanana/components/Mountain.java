@@ -15,7 +15,7 @@ import static hu.crs.montebanana.movement.Direction.RIGHT;
 @RequiredArgsConstructor
 public class Mountain {
     private final Player[] mountain;
-    private final Map<Integer, Integer> playerLocation;
+    final Map<Integer, Integer> playerLocation;
 
     void step(Player player, Movement movement) {
         if (player.getCards().contains(movement.getCard())) {
