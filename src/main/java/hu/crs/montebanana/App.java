@@ -1,14 +1,11 @@
 package hu.crs.montebanana;
 
-import hu.crs.montebanana.components.Board;
-import hu.crs.montebanana.components.Mountain;
+import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.components.Player;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
 import tool.Color;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -17,25 +14,25 @@ import static tool.ColorTools.colorText;
 
 public class App {
 
-    private Board board;
+    private Game game = new Game();
 
     public static void main(String[] args) {
-        App app = new App();
-        app.configuration();
-        app.board.registerPlayer(new Player(0, Color.RED));
-        app.board.registerPlayer(new Player(1, Color.BLUE));
+        Game game = new App().game;
 
-        Player actualPlayer = app.board.actualPlayer();
+        game.registerPlayer(new Player(0, Color.RED));
+        game.registerPlayer(new Player(1, Color.BLUE));
+
+        Player actualPlayer = game.actualPlayer();
 
         Scanner in = new Scanner(System.in);
         while (true) {
-            app.board.newTurn();
-            while (app.board.playersHaveSteps()) {
-                System.out.println(app.board.asString());
+            game.newTurn();
+            while (game.playersHaveSteps()) {
+                System.out.println(game.render());
 
-                Movement movement = app.readMovement(in);
+                Movement movement = new App().readMovement(in);
                 try {
-                    app.board.step(actualPlayer, movement);
+                    game.step(actualPlayer, movement);
                 } catch (Exception e) {
                     System.out.println(error(e.getMessage()));
                     System.out.println();
@@ -43,20 +40,15 @@ public class App {
                 }
 
                 colorText("", Color.RESET);
-                actualPlayer = app.board.nextPlayer();
+                actualPlayer = game.nextPlayer();
             }
 
-            System.out.println(app.board.asString());
-            Player winner = app.board.winner();
+            System.out.println(game.render());
+            Player winner = game.winner();
             winner.receiveBanana();
-            System.out.println(app.winnerToString(winner));
-            System.out.println(app.board.getPlayers());
+            System.out.println(new App().winnerToString(winner));
+            System.out.println(game.getPlayers());
         }
-    }
-
-    private void configuration() {
-        Mountain mountain = new Mountain(new Player[13], new HashMap<>());
-        board = new Board(new ArrayList<>(), mountain);
     }
 
     private Movement readMovement(Scanner in) {
