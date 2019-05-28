@@ -1,6 +1,5 @@
 package hu.crs.montebanana.components;
 
-import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
@@ -8,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
+import static hu.crs.montebanana.movement.Direction.LEFT;
 import static hu.crs.montebanana.movement.Direction.RIGHT;
 
 @RequiredArgsConstructor
@@ -18,45 +20,37 @@ class Mountain {
 
     void step(Player player, Movement movement) {
         if (player.getCards().contains(movement.getCard())) {
-            int oldLocation = location(player);
-
-            int newLocation = findNextEmptyLocation(oldLocation, movement.getCard(), movement.getDirection());
-
-            move(player, oldLocation, newLocation);
+            move(player, findEmptyLocation(location(player), movement));
             player.removeCard(movement.getCard());
         } else {
             throw new IllegalStepException("Step has been already played!");
         }
     }
 
-    private int findNextEmptyLocation(int newLocation, int card, Direction direction) {
-        int stepCount = 0;
-        if (RIGHT == direction) {
-            while (newLocation < 12 && stepCount < card) {
-                newLocation++;
-                if (mountain[newLocation] == null) {
-                    stepCount++;
-                }
-            }
-            if (stepCount == card) {
-                return newLocation;
-            }
-        } else {
-            while (newLocation > 0 && stepCount < card) {
-                newLocation--;
-                if (mountain[newLocation] == null) {
-                    stepCount++;
-                }
-            }
-            if (stepCount == card) {
-                return newLocation;
-            }
+    private int findEmptyLocation(int newLocation, Movement movement) {
+        if (RIGHT == movement.getDirection()) {
+            return findEmptyLocationInDirection(newLocation, movement.getCard(), i -> i < 12, i -> ++i);
+        } else if (LEFT == movement.getDirection()){
+            return findEmptyLocationInDirection(newLocation, movement.getCard(), i -> i > 0, i -> --i);
         }
-
-        throw new IllegalLocationException("No available position present!");
+        throw new IllegalArgumentException("Illegal direction!");
     }
 
-    private void move(Player player, int from, int to) {
+    private int findEmptyLocationInDirection(int newLocation, int card, Predicate<Integer> isInBounds, Function<Integer, Integer> nextIndex) {
+        int stepCount = 0;
+        while (isInBounds.test(stepCount) && stepCount < card) {
+            newLocation = nextIndex.apply(newLocation);
+            if (mountain[newLocation] == null) {
+                stepCount++;
+            }
+        }
+        if (stepCount == card) {
+            return newLocation;
+        }
+        throw new IllegalLocationException("No available position present!");
+    }
+    private void move(Player player, int to) {
+        int from = playerLocation.get(player.getId());
         if (from > -1) mountain[from] = null;
         playerLocation.put(player.getId(), to);
         mountain[playerLocation.get(player.getId())] = player;
