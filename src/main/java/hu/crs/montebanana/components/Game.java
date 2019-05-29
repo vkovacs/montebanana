@@ -67,11 +67,9 @@ public class Game {
     }
 
     public String render() {
-        String availableStepsLine = format("Available steps: %s", actualPlayer().getCards());
-        String mountainLine = board.getMountain().render();
-        String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
-        return colorText(availableStepsLine + "\n", actualPlayer().getColor())
-                + mountainLine + "\n"
-                + stepsLine;
+        String availableSteps = format("Available steps: %s", actualPlayer().getCards());
+        String mountain = board.getMountain().render();
+        return colorText(availableSteps + "\n", actualPlayer().getColor())
+                + mountain;
     }
 }

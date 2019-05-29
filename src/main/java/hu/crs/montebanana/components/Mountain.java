@@ -78,6 +78,8 @@ class Mountain {
             if (c != null) stringBuilder.append(c.asString()).append(" ");
             else stringBuilder.append("  ");
         }
-        return stringBuilder.toString();
+        String playersLine = stringBuilder.toString();
+        String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
+        return playersLine + System.lineSeparator() + stepsLine;
     }
 }
