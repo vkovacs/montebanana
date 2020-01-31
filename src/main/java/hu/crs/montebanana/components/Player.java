@@ -1,5 +1,7 @@
 package hu.crs.montebanana.components;
 
+import hu.crs.montebanana.rendering.Renderable;
+import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import tool.Color;
@@ -12,7 +14,7 @@ import static tool.ColorTools.colorText;
 
 @RequiredArgsConstructor
 @Getter
-public class Player {
+public class Player implements Renderable {
 
     private final int id;
     private final Set<Integer> cards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
@@ -33,16 +35,16 @@ public class Player {
         }
     }
 
-    public String asString() {
-        //return colorText("\3 uD83D\uDC35", color);
-        return colorText("@", color);
-    }
-
     @Override
     public String toString() {
         return "Player{" +
                 "color=" + color +
                 ", bananas=" + bananas +
                 '}';
+    }
+
+    @Override
+    public String accept(RendererVisitor rendererVisitor) {
+        return rendererVisitor.visitPlayer(this);
     }
 }

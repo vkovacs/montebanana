@@ -4,6 +4,8 @@ import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.components.Player;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
+import hu.crs.montebanana.rendering.RendererVisitor;
+import hu.crs.montebanana.rendering.TextRendererVisitor;
 import tool.Color;
 
 import java.util.NoSuchElementException;
@@ -15,6 +17,7 @@ import static tool.ColorTools.colorText;
 public class App {
 
     private Game game = new Game();
+    public static RendererVisitor rendererVisitor = new TextRendererVisitor();
 
     public static void main(String[] args) {
         Game game = new App().game;
@@ -74,6 +77,6 @@ public class App {
     }
 
     private String winnerToString(Player winner) {
-        return colorText(format("The winner is: %s bananas: %s!", winner.asString(), winner.getBananas()), winner.getColor());
+        return colorText(format("The winner is: %s bananas: %s!", winner.accept(rendererVisitor), winner.getBananas()), winner.getColor());
     }
 }

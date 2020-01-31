@@ -1,5 +1,6 @@
 package hu.crs.montebanana.components;
 
+import hu.crs.montebanana.App;
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
@@ -75,7 +76,7 @@ class Mountain {
     String render() {
         StringBuilder stringBuilder = new StringBuilder(26);
         for (Player c : mountain) {
-            if (c != null) stringBuilder.append(c.asString()).append(" ");
+            if (c != null) stringBuilder.append(c.accept(App.rendererVisitor)).append(" ");
             else stringBuilder.append("  ");
         }
         String playersLine = stringBuilder.toString();
