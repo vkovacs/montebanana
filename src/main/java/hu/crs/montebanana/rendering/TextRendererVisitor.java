@@ -26,7 +26,7 @@ public class TextRendererVisitor implements RendererVisitor {
     @Override
     public String visitMountain(Mountain mountain) {
         StringBuilder stringBuilder = new StringBuilder(26);
-        for (Player player : mountain.getMountain()) {
+        for (Player player : mountain.getSteps()) {
             if (player != null) stringBuilder.append(player.accept(App.rendererVisitor)).append(" ");
             else stringBuilder.append("  ");
         }

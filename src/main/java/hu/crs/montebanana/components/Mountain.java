@@ -5,6 +5,7 @@ import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
 import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -17,7 +18,8 @@ import static hu.crs.montebanana.movement.Direction.RIGHT;
 
 @RequiredArgsConstructor
 public class Mountain implements Renderable {
-    private final Player[] mountain;
+    @Getter
+    private final Player[] steps;
     final Map<Integer, Integer> playerLocation;
 
     void step(Player player, Movement movement) {
@@ -42,7 +44,7 @@ public class Mountain implements Renderable {
         int stepCount = 0;
         while (isInBounds.test(stepCount) && stepCount < card) {
             newLocation = nextIndex.apply(newLocation);
-            if (mountain[newLocation] == null) {
+            if (steps[newLocation] == null) {
                 stepCount++;
             }
         }
@@ -54,9 +56,9 @@ public class Mountain implements Renderable {
 
     private void move(Player player, int to) {
         int from = playerLocation.get(player.getId());
-        if (from > -1) mountain[from] = null;
+        if (from > -1) steps[from] = null;
         playerLocation.put(player.getId(), to);
-        mountain[playerLocation.get(player.getId())] = player;
+        steps[playerLocation.get(player.getId())] = player;
     }
 
     private int location(Player player) {
@@ -73,10 +75,6 @@ public class Mountain implements Renderable {
 
     void registerPlayer(Player player) {
         playerLocation.put(player.getId(), -1);
-    }
-
-    public Player[] getMountain() {
-        return mountain;
     }
 
     @Override
