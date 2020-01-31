@@ -1,9 +1,10 @@
 package hu.crs.montebanana.components;
 
-import hu.crs.montebanana.App;
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
+import hu.crs.montebanana.rendering.Renderable;
+import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -15,7 +16,7 @@ import static hu.crs.montebanana.movement.Direction.LEFT;
 import static hu.crs.montebanana.movement.Direction.RIGHT;
 
 @RequiredArgsConstructor
-class Mountain {
+public class Mountain implements Renderable {
     private final Player[] mountain;
     final Map<Integer, Integer> playerLocation;
 
@@ -31,7 +32,7 @@ class Mountain {
     private int findEmptyLocation(int newLocation, Movement movement) {
         if (RIGHT == movement.getDirection()) {
             return findEmptyLocationInDirection(newLocation, movement.getCard(), i -> i < 12, i -> ++i);
-        } else if (LEFT == movement.getDirection()){
+        } else if (LEFT == movement.getDirection()) {
             return findEmptyLocationInDirection(newLocation, movement.getCard(), i -> i > 0, i -> --i);
         }
         throw new IllegalArgumentException("Illegal direction!");
@@ -50,6 +51,7 @@ class Mountain {
         }
         throw new IllegalLocationException("No available position present!");
     }
+
     private void move(Player player, int to) {
         int from = playerLocation.get(player.getId());
         if (from > -1) mountain[from] = null;
@@ -73,14 +75,12 @@ class Mountain {
         playerLocation.put(player.getId(), -1);
     }
 
-    String render() {
-        StringBuilder stringBuilder = new StringBuilder(26);
-        for (Player c : mountain) {
-            if (c != null) stringBuilder.append(c.accept(App.rendererVisitor)).append(" ");
-            else stringBuilder.append("  ");
-        }
-        String playersLine = stringBuilder.toString();
-        String stepsLine = "_ _ _ _ _ _ _ _ _ _ _ _ _";
-        return playersLine + System.lineSeparator() + stepsLine;
+    public Player[] getMountain() {
+        return mountain;
+    }
+
+    @Override
+    public String accept(RendererVisitor rendererVisitor) {
+        return rendererVisitor.visitMountain(this);
     }
 }

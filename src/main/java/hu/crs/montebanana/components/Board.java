@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-class Board {
+public class Board {
 
     @Getter
     private final List<Player> players;

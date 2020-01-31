@@ -2,16 +2,15 @@ package hu.crs.montebanana.components;
 
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
+import hu.crs.montebanana.rendering.Renderable;
+import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.lang.String.format;
-import static tool.ColorTools.colorText;
-
-public class Game {
+public class Game implements Renderable {
 
     @Getter
     private Board board;
@@ -66,10 +65,8 @@ public class Game {
         return board.getPlayers();
     }
 
-    public String render() {
-        String availableSteps = format("Available steps: %s", actualPlayer().getCards());
-        String mountain = board.getMountain().render();
-        return colorText(availableSteps + "\n", actualPlayer().getColor())
-                + mountain;
+    @Override
+    public String accept(RendererVisitor rendererVisitor) {
+        return rendererVisitor.visitGame(this);
     }
 }

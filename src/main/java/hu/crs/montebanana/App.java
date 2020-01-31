@@ -4,6 +4,8 @@ import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.components.Player;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
+import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
+import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import hu.crs.montebanana.rendering.TextRendererVisitor;
 import tool.Color;
@@ -12,12 +14,11 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static java.lang.String.format;
-import static tool.ColorTools.colorText;
 
 public class App {
 
     private Game game = new Game();
-    public static RendererVisitor rendererVisitor = new TextRendererVisitor();
+    public static RendererVisitor rendererVisitor = new ColoredTextRendererVisitor(new TextRendererVisitor());
 
     public static void main(String[] args) {
         Game game = new App().game;
@@ -31,7 +32,8 @@ public class App {
         while (true) {
             game.newTurn();
             while (game.playersHaveSteps()) {
-                System.out.println(game.render());
+                System.out.println(game.accept(rendererVisitor));
+                System.out.println(game.getBoard().getMountain().accept(rendererVisitor));
 
                 Movement movement = new App().readMovement(in);
                 try {
@@ -42,11 +44,12 @@ public class App {
                     continue;
                 }
 
-                colorText("", Color.RESET);
+                new Label("", Color.RESET).accept(rendererVisitor);
                 actualPlayer = game.nextPlayer();
             }
 
-            System.out.println(game.render());
+            System.out.println(game.accept(rendererVisitor));
+            System.out.println(game.getBoard().getMountain().accept(rendererVisitor));
             Player winner = game.winner();
             winner.receiveBanana();
             System.out.println(new App().winnerToString(winner));
@@ -73,10 +76,10 @@ public class App {
     }
 
     private static String error(String message) {
-        return colorText(message, Color.RED_BOLD);
+        return new Label(message, Color.RED_BOLD).accept(rendererVisitor);
     }
 
     private String winnerToString(Player winner) {
-        return colorText(format("The winner is: %s bananas: %s!", winner.accept(rendererVisitor), winner.getBananas()), winner.getColor());
+        return new Label(format("The winner is: %s bananas: %s!", winner.accept(rendererVisitor), winner.getBananas()), winner.getColor()).accept(rendererVisitor);
     }
 }
