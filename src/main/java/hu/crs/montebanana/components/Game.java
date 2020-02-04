@@ -49,7 +49,7 @@ public class Game implements Renderable {
     }
 
     public Player winner() {
-        Integer winnerId = board.getMountain().winnerId();
+        String winnerId = board.getMountain().winnerId();
 
         return board.getPlayers().stream().filter(p -> p.getId() == winnerId).findFirst().orElseThrow(() -> new RuntimeException("No player by id!"));
     }

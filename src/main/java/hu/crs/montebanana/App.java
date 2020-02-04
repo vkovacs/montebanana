@@ -23,8 +23,8 @@ public class App {
     public static void main(String[] args) {
         Game game = new App().game;
 
-        game.registerPlayer(new Player(0, Color.RED));
-        game.registerPlayer(new Player(1, Color.BLUE));
+        game.registerPlayer(new Player(Color.RED));
+        game.registerPlayer(new Player(Color.BLUE));
 
         Player actualPlayer = game.actualPlayer();
 

@@ -20,7 +20,7 @@ import static hu.crs.montebanana.movement.Direction.RIGHT;
 public class Mountain implements Renderable {
     @Getter
     private final Player[] steps;
-    final Map<Integer, Integer> playerLocation;
+    final Map<String, Integer> playerLocation;
 
     void step(Player player, Movement movement) {
         if (player.getCards().contains(movement.getCard())) {
@@ -65,8 +65,8 @@ public class Mountain implements Renderable {
         return playerLocation.get(player.getId());
     }
 
-    Integer winnerId() {
-        Optional<Map.Entry<Integer, Integer>> maxValueEntry = playerLocation.entrySet().stream().max(Map.Entry.comparingByValue());
+    String winnerId() {
+        Optional<Map.Entry<String, Integer>> maxValueEntry = playerLocation.entrySet().stream().max(Map.Entry.comparingByValue());
         if (maxValueEntry.isPresent()) {
             return maxValueEntry.get().getKey();
         }

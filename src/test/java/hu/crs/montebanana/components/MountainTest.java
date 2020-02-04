@@ -17,11 +17,11 @@ public class MountainTest {
 
     @Test(expected = IllegalLocationException.class)
     public void findNextEmptyLocationIllegalLeftStepFromStartingPosition() {
-        Player player = new Player(0, Color.RED);
+        Player player = new Player(Color.RED);
         Player[] players = new Player[13];
-        Map<Integer, Integer> playerLocation = new HashMap<>();
+        Map<String, Integer> playerLocation = new HashMap<>();
 
-        playerLocation.put(0, -1);
+        playerLocation.put(player.getId(), -1);
         Mountain mountain = new Mountain(players, playerLocation);
 
         mountain.step(player, new Movement(1, LEFT));
@@ -29,11 +29,11 @@ public class MountainTest {
 
     @Test
     public void findNextEmptyLocationLegalStepFromStartingPosition() {
-        Player player = new Player(0, Color.RED);
+        Player player = new Player(Color.RED);
         Player[] players = new Player[13];
-        Map<Integer, Integer> playerLocation = new HashMap<>();
+        Map<String, Integer> playerLocation = new HashMap<>();
 
-        playerLocation.put(0, -1);
+        playerLocation.put(player.getId(), -1);
         Mountain mountain = new Mountain(players, playerLocation);
 
         mountain.step(player, new Movement(2, RIGHT));

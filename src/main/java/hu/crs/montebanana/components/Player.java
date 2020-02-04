@@ -9,12 +9,13 @@ import tool.Color;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Getter
 public class Player implements Renderable {
 
-    private final int id;
+    private final String id = UUID.randomUUID().toString();
     private final Set<Integer> cards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
     private final Color color;
     private int bananas = 0;

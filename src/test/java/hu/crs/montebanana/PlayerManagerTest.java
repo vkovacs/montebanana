@@ -24,7 +24,7 @@ public class PlayerManagerTest {
 
     @Test
     public void playerManagerRegisterPlayer() {
-        Player player0 = new Player(0, Color.BLUE);
+        Player player0 = new Player(Color.BLUE);
         playerManager.register(player0);
         assertThat(playerManager.players, Matchers.hasSize(1));
         assertThat(playerManager.players.contains(player0), is(Boolean.TRUE));
@@ -40,7 +40,7 @@ public class PlayerManagerTest {
 
     @Test
     public void getDefaultActualPlayer() {
-        Player player0 = new Player(0, Color.BLUE);
+        Player player0 = new Player(Color.BLUE);
         playerManager.register(player0);
 
         Player actualPlayer = playerManager.actualPlayer();
@@ -58,7 +58,7 @@ public class PlayerManagerTest {
 
     @Test
     public void getActualPlayerAfterActualPlayerMovedIsTheSamePlayerIfNoOtherPlayerRegistered() {
-        Player player0 = new Player(0, Color.BLUE);
+        Player player0 = new Player(Color.BLUE);
         playerManager.register(player0);
 
         playerManager.actualPlayerMoved();
@@ -67,10 +67,10 @@ public class PlayerManagerTest {
 
     @Test
     public void getActualPlayerAfterFirstPlayersMoved() {
-        Player player0 = new Player(0, Color.BLUE);
+        Player player0 = new Player(Color.BLUE);
         playerManager.register(player0);
 
-        Player player1 = new Player(1, Color.RED);
+        Player player1 = new Player(Color.RED);
         playerManager.register(player1);
 
         playerManager.actualPlayerMoved();
@@ -84,7 +84,7 @@ public class PlayerManagerTest {
         expectedException.expect(NoSuchPlayerException.class);
         expectedException.expectMessage("No player is registered!");
 
-        Player player0 = new Player(0, Color.BLUE);
+        Player player0 = new Player(Color.BLUE);
         playerManager.register(player0);
         playerManager.reset();
         playerManager.actualPlayer();
@@ -92,20 +92,20 @@ public class PlayerManagerTest {
 
     @Test
     public void afterResetActualPlayerIsReset() {
-        Player player0 = new Player(0, Color.BLUE);
+        Player player0 = new Player(Color.BLUE);
         playerManager.register(player0);
 
-        Player player1 = new Player(1, Color.RED);
+        Player player1 = new Player(Color.RED);
         playerManager.register(player1);
 
         playerManager.actualPlayerMoved();
 
         playerManager.reset();
 
-        Player player0ReRegistered = new Player(0, Color.BLUE);
+        Player player0ReRegistered = new Player(Color.BLUE);
         playerManager.register(player0ReRegistered);
 
-        Player player1ReRegistered = new Player(1, Color.RED);
+        Player player1ReRegistered = new Player(Color.RED);
         playerManager.register(player1ReRegistered);
 
         assertThat(playerManager.actualPlayer(), is(player0ReRegistered));
@@ -113,10 +113,10 @@ public class PlayerManagerTest {
 
     @Test
     public void fourPlayerCanBeRegistered() {
-        Player player0 = new Player(0, Color.BLUE);
-        Player player1 = new Player(1, Color.RED);
-        Player player2 = new Player(2, Color.GREEN);
-        Player player3 = new Player(3, Color.YELLOW);
+        Player player0 = new Player(Color.BLUE);
+        Player player1 = new Player(Color.RED);
+        Player player2 = new Player(Color.GREEN);
+        Player player3 = new Player(Color.YELLOW);
         playerManager.register(player0);
         playerManager.register(player1);
         playerManager.register(player2);
@@ -128,11 +128,11 @@ public class PlayerManagerTest {
         expectedException.expect(TooManyRegisteredPlayer.class);
         expectedException.expectMessage("Too many registered player!");
 
-        Player player0 = new Player(0, Color.BLUE);
-        Player player1 = new Player(1, Color.RED);
-        Player player2 = new Player(2, Color.GREEN);
-        Player player3 = new Player(3, Color.YELLOW);
-        Player player4 = new Player(3, Color.RED_BOLD);
+        Player player0 = new Player(Color.BLUE);
+        Player player1 = new Player(Color.RED);
+        Player player2 = new Player(Color.GREEN);
+        Player player3 = new Player(Color.YELLOW);
+        Player player4 = new Player(Color.RED_BOLD);
         playerManager.register(player0);
         playerManager.register(player1);
         playerManager.register(player2);
