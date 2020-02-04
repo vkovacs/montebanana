@@ -13,6 +13,13 @@ public class PlayerManager {
         if (players.size() >= 4) {
             throw new TooManyRegisteredPlayer("Too many registered player!");
         }
+
+        if (players.stream()
+                .anyMatch(p -> p.getColor() == player.getColor())) {
+            throw new PlayerColorException("Two player cannot have the same color!");
+
+        }
+
         players.add(player);
         if (actualPlayer < 0) {
             actualPlayer = 0;

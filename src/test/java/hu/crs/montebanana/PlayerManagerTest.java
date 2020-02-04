@@ -139,4 +139,16 @@ public class PlayerManagerTest {
         playerManager.register(player3);
         playerManager.register(player4);
     }
+
+    @Test
+    public void playersMustHaveDifferentColors() {
+        expectedException.expect(PlayerColorException.class);
+        expectedException.expectMessage("Two player cannot have the same color!");
+
+        Player player0 = new Player(Color.BLUE);
+        Player player1 = new Player(Color.BLUE);
+        playerManager.register(player0);
+        playerManager.register(player1);
+
+    }
 }
