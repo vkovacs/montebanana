@@ -10,6 +10,9 @@ public class PlayerManager {
     private int actualPlayer = -1;
 
     public void register(Player player) {
+        if (players.size() >= 4) {
+            throw new TooManyRegisteredPlayer("Too many registered player!");
+        }
         players.add(player);
         if (actualPlayer < 0) {
             actualPlayer = 0;

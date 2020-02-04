@@ -19,7 +19,7 @@ public class PlayerManagerTest {
 
     @Before
     public void setUp() throws Exception {
-
+        playerManager.reset();
     }
 
     @Test
@@ -109,6 +109,34 @@ public class PlayerManagerTest {
         playerManager.register(player1ReRegistered);
 
         assertThat(playerManager.actualPlayer(), is(player0ReRegistered));
+    }
 
+    @Test
+    public void fourPlayerCanBeRegistered() {
+        Player player0 = new Player(0, Color.BLUE);
+        Player player1 = new Player(1, Color.RED);
+        Player player2 = new Player(2, Color.GREEN);
+        Player player3 = new Player(3, Color.YELLOW);
+        playerManager.register(player0);
+        playerManager.register(player1);
+        playerManager.register(player2);
+        playerManager.register(player3);
+    }
+
+    @Test
+    public void maximumRegisteredUserCountIsFour() {
+        expectedException.expect(TooManyRegisteredPlayer.class);
+        expectedException.expectMessage("Too many registered player!");
+
+        Player player0 = new Player(0, Color.BLUE);
+        Player player1 = new Player(1, Color.RED);
+        Player player2 = new Player(2, Color.GREEN);
+        Player player3 = new Player(3, Color.YELLOW);
+        Player player4 = new Player(3, Color.RED_BOLD);
+        playerManager.register(player0);
+        playerManager.register(player1);
+        playerManager.register(player2);
+        playerManager.register(player3);
+        playerManager.register(player4);
     }
 }
