@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import tool.Color;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -32,6 +33,10 @@ public class Player implements Renderable {
         for (int i = 1; i < 6; i++) {
             cards.add(i);
         }
+    }
+
+    public Set<Integer> getCards() {
+        return new HashSet<>(cards);
     }
 
     @Override
