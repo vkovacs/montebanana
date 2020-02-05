@@ -1,4 +1,4 @@
-package hu.crs.montebanana;
+package hu.crs.montebanana.player;
 
 import hu.crs.montebanana.components.Player;
 import org.hamcrest.Matchers;

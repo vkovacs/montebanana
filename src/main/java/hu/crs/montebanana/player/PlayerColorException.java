@@ -1,4 +1,4 @@
-package hu.crs.montebanana;
+package hu.crs.montebanana.player;
 
 public class PlayerColorException extends RuntimeException {
     public PlayerColorException(String message) {
