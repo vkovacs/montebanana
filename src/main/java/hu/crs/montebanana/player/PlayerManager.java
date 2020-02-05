@@ -1,11 +1,12 @@
 package hu.crs.montebanana.player;
 
-import hu.crs.montebanana.components.Player;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerManager {
+    @Getter
     List<Player> players = new ArrayList<>();
     private int actualPlayer = -1;
 
@@ -44,8 +45,20 @@ public class PlayerManager {
         }
     }
 
+    public void newTurn() {
+        players.forEach(Player::getBackAllCards);
+    }
+
+    public boolean playersHaveSteps() {
+        return players.stream().map(player -> player.getCards().size()).reduce(0, Integer::sum) > 0;
+    }
+
     public void reset() {
         players.clear();
         actualPlayer = -1;
+    }
+
+    public Player winnerById(String winnerId) {
+        return players.stream().filter(p -> p.getId().equals(winnerId)).findFirst().orElseThrow(() -> new RuntimeException("No player by id!"));
     }
 }

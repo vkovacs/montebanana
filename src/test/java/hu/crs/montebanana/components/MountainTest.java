@@ -2,6 +2,9 @@ package hu.crs.montebanana.components;
 
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.Movement;
+import hu.crs.montebanana.player.Player;
+import hu.crs.montebanana.player.PlayerManager;
+import hu.crs.montebanana.rendering.TextRendererVisitor;
 import org.junit.Test;
 import tool.Color;
 
@@ -17,7 +20,7 @@ public class MountainTest {
 
     @Test(expected = IllegalLocationException.class)
     public void findNextEmptyLocationIllegalLeftStepFromStartingPosition() {
-        Player player = new Player(Color.RED);
+        Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
         Player[] players = new Player[13];
         Map<String, Integer> playerLocation = new HashMap<>();
 
@@ -29,7 +32,7 @@ public class MountainTest {
 
     @Test
     public void findNextEmptyLocationLegalStepFromStartingPosition() {
-        Player player = new Player(Color.RED);
+        Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
         Player[] players = new Player[13];
         Map<String, Integer> playerLocation = new HashMap<>();
 

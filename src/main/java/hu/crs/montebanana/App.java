@@ -1,9 +1,10 @@
 package hu.crs.montebanana;
 
 import hu.crs.montebanana.components.Game;
-import hu.crs.montebanana.components.Player;
+import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
+import hu.crs.montebanana.player.PlayerManager;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.RendererVisitor;
@@ -17,43 +18,49 @@ import static java.lang.String.format;
 
 public class App {
 
+    private PlayerManager playerManager = new PlayerManager();
+    public final RendererVisitor rendererVisitor = new ColoredTextRendererVisitor(new TextRendererVisitor(playerManager));
     private Game game = new Game();
-    public static RendererVisitor rendererVisitor = new ColoredTextRendererVisitor(new TextRendererVisitor());
 
     public static void main(String[] args) {
+        App app = new App();
+        PlayerManager playerManager = app.playerManager;
+        RendererVisitor rendererVisitor = app.rendererVisitor;
+
+        playerManager.register(new Player(Color.RED, rendererVisitor));
+        playerManager.register(new Player(Color.BLUE, rendererVisitor));
+
         Game game = new App().game;
+        game.registerPlayers(playerManager.getPlayers());
 
-        game.registerPlayer(new Player(Color.RED));
-        game.registerPlayer(new Player(Color.BLUE));
+        Player actualPlayer = playerManager.actualPlayer();
 
-        Player actualPlayer = game.actualPlayer();
-
-        Scanner in = new Scanner(System.in);
         while (true) {
-            game.newTurn();
-            while (game.playersHaveSteps()) {
+            playerManager.newTurn();
+
+            while (playerManager.playersHaveSteps()) {
                 System.out.println(game.accept(rendererVisitor));
                 System.out.println(game.getBoard().getMountain().accept(rendererVisitor));
 
-                Movement movement = new App().readMovement(in);
                 try {
-                    game.step(actualPlayer, movement);
+                    actualPlayer.step(game.getBoard());
                 } catch (Exception e) {
-                    System.out.println(error(e.getMessage()));
+                    System.out.println(app.error(e.getMessage()));
                     System.out.println();
                     continue;
                 }
 
                 new Label("", Color.RESET).accept(rendererVisitor);
-                actualPlayer = game.nextPlayer();
+                playerManager.actualPlayerMoved();
+                actualPlayer = playerManager.actualPlayer();
             }
 
             System.out.println(game.accept(rendererVisitor));
             System.out.println(game.getBoard().getMountain().accept(rendererVisitor));
-            Player winner = game.winner();
+            String winnerId = game.winnerId();
+            Player winner = playerManager.winnerById(winnerId);
             winner.receiveBanana();
             System.out.println(new App().winnerToString(winner));
-            System.out.println(game.getPlayers());
         }
     }
 
@@ -75,7 +82,7 @@ public class App {
         }
     }
 
-    private static String error(String message) {
+    private String error(String message) {
         return new Label(message, Color.RED_BOLD).accept(rendererVisitor);
     }
 

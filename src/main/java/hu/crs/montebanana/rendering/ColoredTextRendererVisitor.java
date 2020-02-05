@@ -2,7 +2,7 @@ package hu.crs.montebanana.rendering;
 
 import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.components.Mountain;
-import hu.crs.montebanana.components.Player;
+import hu.crs.montebanana.player.Player;
 import tool.Color;
 
 public class ColoredTextRendererVisitor implements RendererVisitor{
@@ -28,7 +28,7 @@ public class ColoredTextRendererVisitor implements RendererVisitor{
     public String visitGame(Game game) {
         String renderedGame = textRendererVisitor.visitGame(game);
 
-        return colorText(renderedGame, game.actualPlayer().getColor());
+        return colorText(renderedGame, textRendererVisitor.getPlayerManager().actualPlayer().getColor());
     }
 
     @Override

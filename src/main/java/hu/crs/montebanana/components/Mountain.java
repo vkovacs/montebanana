@@ -3,6 +3,7 @@ package hu.crs.montebanana.components;
 import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
+import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
@@ -25,7 +26,6 @@ public class Mountain implements Renderable {
     void step(Player player, Movement movement) {
         if (player.getCards().contains(movement.getCard())) {
             move(player, findEmptyLocation(location(player), movement));
-            player.removeCard(movement.getCard());
         } else {
             throw new IllegalStepException("Step has been already played!");
         }
