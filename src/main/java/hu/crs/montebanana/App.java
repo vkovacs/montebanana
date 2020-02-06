@@ -16,9 +16,10 @@ public class App {
     private Game game = new Game();
 
     public static void main(String[] args) {
-        App app = new App();
-        Game game = app.game;
+        new App().start();
+    }
 
+    private void start() {
         game.registerPlayer(new Player(Color.RED));
         game.registerPlayer(new Player(Color.BLUE));
 
@@ -34,7 +35,7 @@ public class App {
                 try {
                     actualPlayer.step(game.getBoard());
                 } catch (Exception e) {
-                    render(app.error(e.getMessage()));
+                    render(error(e.getMessage()));
                     System.out.println();
                     continue;
                 }
@@ -48,15 +49,15 @@ public class App {
             render(game.getBoard().getMountain());
             Player winner = game.winner();
             winner.receiveBanana();
-            render(app.winnerLabel(winner));
+            render(winnerLabel(winner));
         }
     }
 
-    private Label error(String message) {
+    private static Label error(String message) {
         return new Label(message, Color.RED_BOLD);
     }
 
-    private Label winnerLabel(Player winner) {
+    private static Label winnerLabel(Player winner) {
         return new Label(format("The winner is: %s bananas: %s!", winner.accept(RENDERER_VISITOR), winner.getBananas()), winner.getColor());
     }
 
