@@ -10,10 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Game implements Renderable {
-
     @Getter
     private Board board;
-
     @Getter
     private PlayerManager playerManager = new PlayerManager();
 

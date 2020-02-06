@@ -19,6 +19,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
+import static hu.crs.montebanana.App.RENDERER_VISITOR;
+
 @RequiredArgsConstructor
 @Getter
 public class Player implements Renderable {
@@ -26,7 +28,6 @@ public class Player implements Renderable {
     private final String id = UUID.randomUUID().toString();
     private final Set<Integer> cards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
     private final Color color;
-    private final RendererVisitor rendererVisitor;
     private int bananas = 0;
     @Getter
     private int lastCard = -1;
@@ -97,6 +98,6 @@ public class Player implements Renderable {
     }
 
     private String error(String message) {
-        return new Label(message, Color.RED_BOLD).accept(rendererVisitor);
+        return new Label(message, Color.RED_BOLD).accept(RENDERER_VISITOR);
     }
 }

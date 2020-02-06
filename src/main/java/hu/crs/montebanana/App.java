@@ -13,19 +13,17 @@ import static java.lang.String.format;
 
 public class App {
 
-    public final RendererVisitor rendererVisitor = new ColoredTextRendererVisitor(new TextRendererVisitor());
+    public static final RendererVisitor RENDERER_VISITOR = new ColoredTextRendererVisitor(new TextRendererVisitor());
     private Game game = new Game();
 
     public static void main(String[] args) {
         App app = new App();
-        Game game = new App().game;
+        Game game = app.game;
 
         PlayerManager playerManager = app.game.getPlayerManager();
-        RendererVisitor rendererVisitor = app.rendererVisitor;
 
-        playerManager.register(new Player(Color.RED, rendererVisitor));
-        playerManager.register(new Player(Color.BLUE, rendererVisitor));
-
+        playerManager.register(new Player(Color.RED));
+        playerManager.register(new Player(Color.BLUE));
 
         game.registerPlayers(playerManager.getPlayers());
 
@@ -35,8 +33,8 @@ public class App {
             playerManager.newTurn();
 
             while (playerManager.playersHaveSteps()) {
-                System.out.println(game.accept(rendererVisitor));
-                System.out.println(game.getBoard().getMountain().accept(rendererVisitor));
+                System.out.println(game.accept(RENDERER_VISITOR));
+                System.out.println(game.getBoard().getMountain().accept(RENDERER_VISITOR));
 
                 try {
                     actualPlayer.step(game.getBoard());
@@ -46,13 +44,13 @@ public class App {
                     continue;
                 }
 
-                new Label("", Color.RESET).accept(rendererVisitor);
+                new Label("", Color.RESET).accept(RENDERER_VISITOR);
                 playerManager.actualPlayerMoved();
                 actualPlayer = playerManager.actualPlayer();
             }
 
-            System.out.println(game.accept(rendererVisitor));
-            System.out.println(game.getBoard().getMountain().accept(rendererVisitor));
+            System.out.println(game.accept(RENDERER_VISITOR));
+            System.out.println(game.getBoard().getMountain().accept(RENDERER_VISITOR));
             String winnerId = game.winnerId();
             Player winner = playerManager.winnerById(winnerId);
             winner.receiveBanana();
@@ -61,10 +59,10 @@ public class App {
     }
 
     private String error(String message) {
-        return new Label(message, Color.RED_BOLD).accept(rendererVisitor);
+        return new Label(message, Color.RED_BOLD).accept(RENDERER_VISITOR);
     }
 
     private String winnerToString(Player winner) {
-        return new Label(format("The winner is: %s bananas: %s!", winner.accept(rendererVisitor), winner.getBananas()), winner.getColor()).accept(rendererVisitor);
+        return new Label(format("The winner is: %s bananas: %s!", winner.accept(RENDERER_VISITOR), winner.getBananas()), winner.getColor()).accept(RENDERER_VISITOR);
     }
 }

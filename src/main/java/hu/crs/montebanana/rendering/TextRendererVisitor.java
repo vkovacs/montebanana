@@ -27,7 +27,7 @@ public class TextRendererVisitor implements RendererVisitor {
     public String visitMountain(Mountain mountain) {
         StringBuilder stringBuilder = new StringBuilder(26);
         for (Player player : mountain.getSteps()) {
-            if (player != null) stringBuilder.append(player.accept(this)).append(" ");
+            if (player != null) stringBuilder.append(visitPlayer(player)).append(" ");
             else stringBuilder.append("  ");
         }
         String playersLine = stringBuilder.toString();
