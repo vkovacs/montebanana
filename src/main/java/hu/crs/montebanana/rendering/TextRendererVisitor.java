@@ -3,17 +3,10 @@ package hu.crs.montebanana.rendering;
 import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.components.Mountain;
 import hu.crs.montebanana.player.Player;
-import hu.crs.montebanana.player.PlayerManager;
-import lombok.Getter;
 
 import static java.lang.String.format;
 
 public class TextRendererVisitor implements RendererVisitor {
-    @Getter
-    private PlayerManager playerManager;
-    public TextRendererVisitor(PlayerManager playerManager) {
-        this.playerManager = playerManager;
-    }
 
     @Override
     public String visitPlayer(Player player) {
@@ -27,7 +20,7 @@ public class TextRendererVisitor implements RendererVisitor {
 
     @Override
     public String visitGame(Game game) {
-        return format("Available steps: %s", playerManager.actualPlayer().getCards());
+        return format("Available steps: %s", game.getPlayerManager().actualPlayer().getCards());
     }
 
     @Override

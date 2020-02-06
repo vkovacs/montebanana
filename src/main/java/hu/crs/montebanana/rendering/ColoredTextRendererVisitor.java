@@ -28,7 +28,7 @@ public class ColoredTextRendererVisitor implements RendererVisitor{
     public String visitGame(Game game) {
         String renderedGame = textRendererVisitor.visitGame(game);
 
-        return colorText(renderedGame, textRendererVisitor.getPlayerManager().actualPlayer().getColor());
+        return colorText(renderedGame, game.getPlayerManager().actualPlayer().getColor());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package hu.crs.montebanana.components;
 
 import hu.crs.montebanana.player.Player;
+import hu.crs.montebanana.player.PlayerManager;
 import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
@@ -12,6 +13,9 @@ public class Game implements Renderable {
 
     @Getter
     private Board board;
+
+    @Getter
+    private PlayerManager playerManager = new PlayerManager();
 
     public Game() {
         Mountain mountain = new Mountain(new Player[13], new HashMap<>());

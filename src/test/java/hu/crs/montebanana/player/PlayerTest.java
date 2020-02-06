@@ -12,15 +12,15 @@ public class PlayerTest {
 
     @Test
     public void removeCard() {
-        Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
+        Player player = new Player(Color.RED, new TextRendererVisitor());
         player.removeCard(4);
 
-        assertThat(player.getCards(), containsInAnyOrder(1,2,3,5));
+        assertThat(player.getCards(), containsInAnyOrder(1, 2, 3, 5));
     }
 
     @Test
     public void receiveBanana() {
-        Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
+        Player player = new Player(Color.RED, new TextRendererVisitor());
         assertThat(player.getBananas(), is(0));
 
         player.receiveBanana();
@@ -29,11 +29,11 @@ public class PlayerTest {
 
     @Test
     public void getBackAllCards() {
-        Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
+        Player player = new Player(Color.RED, new TextRendererVisitor());
         player.removeCard(1);
         player.removeCard(5);
         player.getBackAllCards();
 
-        assertThat(player.getCards(), containsInAnyOrder(1,2,3,4,5));
+        assertThat(player.getCards(), containsInAnyOrder(1, 2, 3, 4, 5));
     }
 }
