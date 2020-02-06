@@ -6,14 +6,13 @@ import hu.crs.montebanana.player.PlayerManager;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.RendererVisitor;
-import hu.crs.montebanana.rendering.TextRendererVisitor;
 import tool.Color;
 
 import static java.lang.String.format;
 
 public class App {
 
-    public static final RendererVisitor RENDERER_VISITOR = new ColoredTextRendererVisitor(new TextRendererVisitor());
+    public static final RendererVisitor RENDERER_VISITOR = new ColoredTextRendererVisitor();
     private Game game = new Game();
 
     public static void main(String[] args) {

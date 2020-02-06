@@ -1,39 +1,27 @@
 package hu.crs.montebanana.rendering;
 
 import hu.crs.montebanana.components.Game;
-import hu.crs.montebanana.components.Mountain;
 import hu.crs.montebanana.player.Player;
 import tool.Color;
 
-public class ColoredTextRendererVisitor implements RendererVisitor{
-    private final TextRendererVisitor textRendererVisitor;
-
-    public ColoredTextRendererVisitor(TextRendererVisitor textRendererVisitor) {
-        this.textRendererVisitor = textRendererVisitor;
-    }
+public class ColoredTextRendererVisitor extends TextRendererVisitor implements RendererVisitor {
 
     @Override
     public String visitPlayer(Player player) {
-        String renderedPlayer = textRendererVisitor.visitPlayer(player);
+        String renderedPlayer = super.visitPlayer(player);
         return colorText(renderedPlayer, player.getColor());
     }
 
     @Override
     public String visitLabel(Label label) {
-        String renderedLabel = textRendererVisitor.visitLabel(label);
+        String renderedLabel = super.visitLabel(label);
         return colorText(renderedLabel, label.getColor());
     }
 
     @Override
     public String visitGame(Game game) {
-        String renderedGame = textRendererVisitor.visitGame(game);
-
+        String renderedGame = super.visitGame(game);
         return colorText(renderedGame, game.getPlayerManager().actualPlayer().getColor());
-    }
-
-    @Override
-    public String visitMountain(Mountain mountain) {
-        return textRendererVisitor.visitMountain(mountain);
     }
 
     public static String colorText(String text, Color color) {
