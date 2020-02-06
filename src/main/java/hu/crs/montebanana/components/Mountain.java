@@ -31,11 +31,11 @@ public class Mountain implements Renderable {
         }
     }
 
-    private int findEmptyLocation(int newLocation, Movement movement) {
+    private int findEmptyLocation(int startingLocation, Movement movement) {
         if (RIGHT == movement.getDirection()) {
-            return findEmptyLocationInDirection(newLocation, movement.getCard(), i -> i < 12, i -> ++i);
+            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i < 12, i -> ++i);
         } else if (LEFT == movement.getDirection()) {
-            return findEmptyLocationInDirection(newLocation, movement.getCard(), i -> i > 0, i -> --i);
+            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i > 0, i -> --i);
         }
         throw new IllegalArgumentException("Illegal direction!");
     }
