@@ -33,9 +33,9 @@ public class Mountain implements Renderable {
 
     private int findEmptyLocation(int startingLocation, Movement movement) {
         if (RIGHT == movement.getDirection()) {
-            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i < 12, i -> ++i);
+            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i <= 12, i -> ++i);
         } else if (LEFT == movement.getDirection()) {
-            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i > 0, i -> --i);
+            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i >= 0, i -> --i);
         }
         throw new IllegalArgumentException("Illegal direction!");
     }
@@ -44,6 +44,11 @@ public class Mountain implements Renderable {
         int stepCount = 0;
         while (isInBounds.test(stepCount) && stepCount < card) {
             newLocation = nextIndex.apply(newLocation);
+
+            if (newLocation < 0 || newLocation > 12) {
+                throw new IllegalLocationException("No available position present!");
+            }
+
             if (steps[newLocation] == null) {
                 stepCount++;
             }

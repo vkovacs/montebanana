@@ -30,8 +30,20 @@ public class MountainTest {
         mountain.step(player, new Movement(1, LEFT));
     }
 
+    @Test(expected = IllegalLocationException.class)
+    public void findNextEmptyLocationIllegalRightStepFromEndingPosition() {
+        Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
+        Player[] players = new Player[13];
+        Map<String, Integer> playerLocation = new HashMap<>();
+
+        playerLocation.put(player.getId(), 12);
+        Mountain mountain = new Mountain(players, playerLocation);
+
+        mountain.step(player, new Movement(1, RIGHT));
+    }
+
     @Test
-    public void findNextEmptyLocationLegalStepFromStartingPosition() {
+    public void findNextEmptyLocationLegalStepToRightFromStartingPosition() {
         Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
         Player[] players = new Player[13];
         Map<String, Integer> playerLocation = new HashMap<>();
@@ -41,5 +53,18 @@ public class MountainTest {
 
         mountain.step(player, new Movement(2, RIGHT));
         assertThat(mountain.playerLocation.get(player.getId()), is(1));
+    }
+
+    @Test
+    public void findNextEmptyLocationLegalStepToLeftFromEndingPosition() {
+        Player player = new Player(Color.RED, new TextRendererVisitor(new PlayerManager()));
+        Player[] players = new Player[13];
+        Map<String, Integer> playerLocation = new HashMap<>();
+
+        playerLocation.put(player.getId(), 12);
+        Mountain mountain = new Mountain(players, playerLocation);
+
+        mountain.step(player, new Movement(2, LEFT));
+        assertThat(mountain.playerLocation.get(player.getId()), is(10));
     }
 }
