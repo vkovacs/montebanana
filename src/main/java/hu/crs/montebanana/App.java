@@ -4,6 +4,7 @@ import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.Label;
+import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import tool.Color;
 
@@ -27,35 +28,39 @@ public class App {
             game.newTurn();
 
             while (game.playersHaveSteps()) {
-                System.out.println(game.accept(RENDERER_VISITOR));
-                System.out.println(game.getBoard().getMountain().accept(RENDERER_VISITOR));
+                render(game);
+                render(game.getBoard().getMountain());
 
                 try {
                     actualPlayer.step(game.getBoard());
                 } catch (Exception e) {
-                    System.out.println(app.error(e.getMessage()));
+                    render(app.error(e.getMessage()));
                     System.out.println();
                     continue;
                 }
 
-                new Label("", Color.RESET).accept(RENDERER_VISITOR);
+                render(new Label("", Color.RESET));
                 game.actualPlayerMoved();
                 actualPlayer = game.actualPlayer();
             }
 
-            System.out.println(game.accept(RENDERER_VISITOR));
-            System.out.println(game.getBoard().getMountain().accept(RENDERER_VISITOR));
+            render(game);
+            render(game.getBoard().getMountain());
             Player winner = game.winner();
             winner.receiveBanana();
-            System.out.println(new App().winnerToString(winner));
+            render(app.winnerLabel(winner));
         }
     }
 
-    private String error(String message) {
-        return new Label(message, Color.RED_BOLD).accept(RENDERER_VISITOR);
+    private Label error(String message) {
+        return new Label(message, Color.RED_BOLD);
     }
 
-    private String winnerToString(Player winner) {
-        return new Label(format("The winner is: %s bananas: %s!", winner.accept(RENDERER_VISITOR), winner.getBananas()), winner.getColor()).accept(RENDERER_VISITOR);
+    private Label winnerLabel(Player winner) {
+        return new Label(format("The winner is: %s bananas: %s!", winner.accept(RENDERER_VISITOR), winner.getBananas()), winner.getColor());
+    }
+
+    private static void render(Renderable renderable) {
+        System.out.println(renderable.accept(RENDERER_VISITOR));
     }
 }
