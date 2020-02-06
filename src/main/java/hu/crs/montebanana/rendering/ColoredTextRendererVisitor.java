@@ -21,7 +21,7 @@ public class ColoredTextRendererVisitor extends TextRendererVisitor implements R
     @Override
     public String visitGame(Game game) {
         String renderedGame = super.visitGame(game);
-        return colorText(renderedGame, game.getPlayerManager().actualPlayer().getColor());
+        return colorText(renderedGame, game.actualPlayer().getColor());
     }
 
     public static String colorText(String text, Color color) {

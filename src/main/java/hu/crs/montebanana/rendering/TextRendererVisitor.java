@@ -20,7 +20,7 @@ public class TextRendererVisitor implements RendererVisitor {
 
     @Override
     public String visitGame(Game game) {
-        return format("Available steps: %s", game.getPlayerManager().actualPlayer().getCards());
+        return format("Available steps: %s", game.actualPlayer().getCards());
     }
 
     @Override

@@ -2,7 +2,6 @@ package hu.crs.montebanana;
 
 import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.player.Player;
-import hu.crs.montebanana.player.PlayerManager;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.RendererVisitor;
@@ -19,19 +18,15 @@ public class App {
         App app = new App();
         Game game = app.game;
 
-        PlayerManager playerManager = app.game.getPlayerManager();
+        game.registerPlayer(new Player(Color.RED));
+        game.registerPlayer(new Player(Color.BLUE));
 
-        playerManager.register(new Player(Color.RED));
-        playerManager.register(new Player(Color.BLUE));
-
-        game.registerPlayers(playerManager.getPlayers());
-
-        Player actualPlayer = playerManager.actualPlayer();
+        Player actualPlayer = game.actualPlayer();
 
         while (true) {
-            playerManager.newTurn();
+            game.newTurn();
 
-            while (playerManager.playersHaveSteps()) {
+            while (game.playersHaveSteps()) {
                 System.out.println(game.accept(RENDERER_VISITOR));
                 System.out.println(game.getBoard().getMountain().accept(RENDERER_VISITOR));
 
@@ -44,14 +39,13 @@ public class App {
                 }
 
                 new Label("", Color.RESET).accept(RENDERER_VISITOR);
-                playerManager.actualPlayerMoved();
-                actualPlayer = playerManager.actualPlayer();
+                game.actualPlayerMoved();
+                actualPlayer = game.actualPlayer();
             }
 
             System.out.println(game.accept(RENDERER_VISITOR));
             System.out.println(game.getBoard().getMountain().accept(RENDERER_VISITOR));
-            String winnerId = game.winnerId();
-            Player winner = playerManager.winnerById(winnerId);
+            Player winner = game.winner();
             winner.receiveBanana();
             System.out.println(new App().winnerToString(winner));
         }

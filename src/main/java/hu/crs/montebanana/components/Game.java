@@ -7,12 +7,10 @@ import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Game implements Renderable {
     @Getter
     private Board board;
-    @Getter
     private PlayerManager playerManager = new PlayerManager();
 
     public Game() {
@@ -20,17 +18,37 @@ public class Game implements Renderable {
         board = new Board(mountain);
     }
 
-
-    public String winnerId() {
-        return board.getMountain().winnerId();
-    }
-
     @Override
     public String accept(RendererVisitor rendererVisitor) {
         return rendererVisitor.visitGame(this);
     }
 
-    public void registerPlayers(List<Player> players) {
-        board.registerPlayers(players);
+    public void registerPlayer(Player player) {
+        playerManager.register(player);
+        board.registerPlayer(player);
+    }
+
+    public Player actualPlayer() {
+        return playerManager.actualPlayer();
+    }
+
+    public void newTurn() {
+        playerManager.newTurn();
+    }
+
+    public boolean playersHaveSteps() {
+        return playerManager.playersHaveSteps();
+    }
+
+    public void actualPlayerMoved() {
+        playerManager.actualPlayerMoved();
+    }
+
+    public Player winner() {
+        return playerManager.winnerById(winnerId());
+    }
+
+    public String winnerId() {
+        return board.getMountain().winnerId();
     }
 }

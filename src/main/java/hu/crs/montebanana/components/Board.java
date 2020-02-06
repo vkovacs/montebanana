@@ -5,8 +5,6 @@ import hu.crs.montebanana.player.Player;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 public class Board {
 
@@ -17,8 +15,7 @@ public class Board {
         mountain.step(player, movement);
     }
 
-    public void registerPlayers(List<Player> players) {
-        players.forEach(mountain::registerPlayer);
-
+    public void registerPlayer(Player player) {
+        mountain.registerPlayer(player);
     }
 }
