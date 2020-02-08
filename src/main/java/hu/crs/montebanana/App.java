@@ -1,6 +1,8 @@
 package hu.crs.montebanana;
 
 import hu.crs.montebanana.components.Game;
+import hu.crs.montebanana.movement.strategy.ConsoleReaderStrategy;
+import hu.crs.montebanana.movement.strategy.RandomMovementStrategy;
 import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.RendererVisitor;
@@ -18,8 +20,8 @@ public class App {
     }
 
     private void init() {
-        game.registerPlayer(new Player(Color.RED));
-        game.registerPlayer(new Player(Color.BLUE));
+        game.registerPlayer(new Player(Color.RED, new ConsoleReaderStrategy()));
+        game.registerPlayer(new Player(Color.BLUE, new RandomMovementStrategy()));
     }
 
     private void start() {

@@ -9,6 +9,7 @@ import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -80,6 +81,11 @@ public class Board implements Renderable {
 
     void registerPlayer(Player player) {
         playerLocation.put(player.getId(), -1);
+    }
+
+    void reset() {
+        Arrays.fill(steps, null);
+        playerLocation.clear();
     }
 
     @Override

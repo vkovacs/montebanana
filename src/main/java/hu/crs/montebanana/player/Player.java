@@ -1,10 +1,8 @@
 package hu.crs.montebanana.player;
 
 import hu.crs.montebanana.components.Board;
-import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.IllegalStepException;
 import hu.crs.montebanana.movement.Movement;
-import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
@@ -13,13 +11,9 @@ import tool.Color;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
-
-import static hu.crs.montebanana.App.RENDERER_VISITOR;
 
 @RequiredArgsConstructor
 @Getter
@@ -28,6 +22,7 @@ public class Player implements Renderable {
     private final String id = UUID.randomUUID().toString();
     private final Set<Integer> cards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
     private final Color color;
+    private final MovementStrategy movementStrategy;
     private int bananas = 0;
     @Getter
     private int lastCard = -1;
@@ -75,29 +70,6 @@ public class Player implements Renderable {
     }
 
     private Movement next() {
-        Scanner in = new Scanner(System.in);
-        return readMovement(in);
-    }
-
-    private Movement readMovement(Scanner in) {
-        int stepCount;
-        Direction stepDirection;
-        while (true) {
-            try {
-                String command = in.nextLine();
-                stepCount = Math.abs(Integer.parseInt(command.split(" ")[0]));
-                stepDirection = Direction.valueOfChar(Character.toLowerCase(command.split(" ")[1].charAt(0)));
-                return new Movement(stepCount, stepDirection);
-            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-                System.out.println(error("Incorrect input! Try again!"));
-            } catch (NoSuchElementException e) {
-                System.out.println("Bye!");
-                System.exit(0);
-            }
-        }
-    }
-
-    private String error(String message) {
-        return new Label(message, Color.RED_BOLD).accept(RENDERER_VISITOR);
+        return movementStrategy.next(cards);
     }
 }

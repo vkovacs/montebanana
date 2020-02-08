@@ -1,5 +1,7 @@
 package hu.crs.montebanana.player;
 
+import hu.crs.montebanana.player.exception.PlayerColorException;
+import hu.crs.montebanana.player.exception.TooManyRegisteredPlayerException;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class PlayerManager {
 
     public void register(Player player) {
         if (players.size() >= 4) {
-            throw new TooManyRegisteredPlayer("Too many registered player!");
+            throw new TooManyRegisteredPlayerException("Too many registered player!");
         }
 
         if (players.stream()

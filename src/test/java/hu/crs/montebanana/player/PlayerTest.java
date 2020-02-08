@@ -1,5 +1,6 @@
 package hu.crs.montebanana.player;
 
+import hu.crs.montebanana.movement.strategy.NoOpMovementStrategy;
 import org.junit.Test;
 import tool.Color;
 
@@ -11,7 +12,7 @@ public class PlayerTest {
 
     @Test
     public void removeCard() {
-        Player player = new Player(Color.RED);
+        Player player = new Player(Color.RED, new NoOpMovementStrategy());
         player.removeCard(4);
 
         assertThat(player.getCards(), containsInAnyOrder(1, 2, 3, 5));
@@ -19,7 +20,7 @@ public class PlayerTest {
 
     @Test
     public void receiveBanana() {
-        Player player = new Player(Color.RED);
+        Player player = new Player(Color.RED, new NoOpMovementStrategy());
         assertThat(player.getBananas(), is(0));
 
         player.receiveBanana();
@@ -28,7 +29,7 @@ public class PlayerTest {
 
     @Test
     public void getBackAllCards() {
-        Player player = new Player(Color.RED);
+        Player player = new Player(Color.RED, new NoOpMovementStrategy());
         player.removeCard(1);
         player.removeCard(5);
         player.getBackAllCards();
