@@ -1,7 +1,7 @@
 package hu.crs.montebanana.rendering;
 
 import hu.crs.montebanana.components.Game;
-import hu.crs.montebanana.components.Mountain;
+import hu.crs.montebanana.components.Board;
 import hu.crs.montebanana.player.Player;
 
 public interface RendererVisitor {
@@ -11,5 +11,5 @@ public interface RendererVisitor {
 
     String visitGame(Game game);
 
-    String visitMountain(Mountain mountain);
+    String visitBoard(Board board);
 }

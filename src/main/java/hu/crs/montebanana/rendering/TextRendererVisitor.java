@@ -1,7 +1,7 @@
 package hu.crs.montebanana.rendering;
 
 import hu.crs.montebanana.components.Game;
-import hu.crs.montebanana.components.Mountain;
+import hu.crs.montebanana.components.Board;
 import hu.crs.montebanana.player.Player;
 
 import static java.lang.String.format;
@@ -20,13 +20,15 @@ public class TextRendererVisitor implements RendererVisitor {
 
     @Override
     public String visitGame(Game game) {
-        return format("Available steps: %s", game.actualPlayer().getCards());
+        return format("Available steps: %s", game.actualPlayer().getCards())
+                + System.lineSeparator() +
+                visitBoard(game.getBoard());
     }
 
     @Override
-    public String visitMountain(Mountain mountain) {
+    public String visitBoard(Board board) {
         StringBuilder stringBuilder = new StringBuilder(26);
-        for (Player player : mountain.getSteps()) {
+        for (Player player : board.getSteps()) {
             if (player != null) stringBuilder.append(visitPlayer(player)).append(" ");
             else stringBuilder.append("  ");
         }

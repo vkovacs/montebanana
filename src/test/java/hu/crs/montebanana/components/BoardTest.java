@@ -14,7 +14,7 @@ import static hu.crs.montebanana.movement.Direction.RIGHT;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class MountainTest {
+public class BoardTest {
 
     @Test(expected = IllegalLocationException.class)
     public void findNextEmptyLocationIllegalLeftStepFromStartingPosition() {
@@ -23,9 +23,9 @@ public class MountainTest {
         Map<String, Integer> playerLocation = new HashMap<>();
 
         playerLocation.put(player.getId(), -1);
-        Mountain mountain = new Mountain(players, playerLocation);
+        Board board = new Board(players, playerLocation);
 
-        mountain.step(player, new Movement(1, LEFT));
+        board.step(player, new Movement(1, LEFT));
     }
 
     @Test(expected = IllegalLocationException.class)
@@ -35,9 +35,9 @@ public class MountainTest {
         Map<String, Integer> playerLocation = new HashMap<>();
 
         playerLocation.put(player.getId(), 12);
-        Mountain mountain = new Mountain(players, playerLocation);
+        Board board = new Board(players, playerLocation);
 
-        mountain.step(player, new Movement(1, RIGHT));
+        board.step(player, new Movement(1, RIGHT));
     }
 
     @Test
@@ -47,10 +47,10 @@ public class MountainTest {
         Map<String, Integer> playerLocation = new HashMap<>();
 
         playerLocation.put(player.getId(), -1);
-        Mountain mountain = new Mountain(players, playerLocation);
+        Board board = new Board(players, playerLocation);
 
-        mountain.step(player, new Movement(2, RIGHT));
-        assertThat(mountain.playerLocation.get(player.getId()), is(1));
+        board.step(player, new Movement(2, RIGHT));
+        assertThat(board.playerLocation.get(player.getId()), is(1));
     }
 
     @Test
@@ -60,9 +60,9 @@ public class MountainTest {
         Map<String, Integer> playerLocation = new HashMap<>();
 
         playerLocation.put(player.getId(), 12);
-        Mountain mountain = new Mountain(players, playerLocation);
+        Board board = new Board(players, playerLocation);
 
-        mountain.step(player, new Movement(2, LEFT));
-        assertThat(mountain.playerLocation.get(player.getId()), is(10));
+        board.step(player, new Movement(2, LEFT));
+        assertThat(board.playerLocation.get(player.getId()), is(10));
     }
 }

@@ -2,20 +2,56 @@ package hu.crs.montebanana.components;
 
 import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.player.PlayerManager;
+import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
+import tool.Color;
 
 import java.util.HashMap;
 
+import static hu.crs.montebanana.App.RENDERER_VISITOR;
+import static java.lang.String.format;
+
 public class Game implements Renderable {
     @Getter
-    private Board board;
+    private Board board = new Board(new Player[13], new HashMap<>());
     private PlayerManager playerManager = new PlayerManager();
 
-    public Game() {
-        Mountain mountain = new Mountain(new Player[13], new HashMap<>());
-        board = new Board(mountain);
+    @SuppressWarnings("InfiniteLoopStatement")
+    public void start() {
+        Player actualPlayer = actualPlayer();
+
+        while (true) {
+            newTurn();
+
+            while (playersHaveSteps()) {
+                render(this);
+
+                try {
+                    actualPlayer.step(board);
+                } catch (Exception e) {
+                    render(error(e.getMessage()));
+                    System.out.println();
+                    continue;
+                }
+
+                render(new Label("", Color.RESET));
+                actualPlayerMoved();
+                actualPlayer = actualPlayer();
+            }
+
+            render(this);
+
+            Player winner = determineAndHandleWinner();
+            render(winnerLabel(winner));
+        }
+    }
+
+    private Player determineAndHandleWinner() {
+        Player winner = playerManager.winnerById(board.winnerId());
+        winner.receiveBanana();
+        return winner;
     }
 
     @Override
@@ -44,11 +80,15 @@ public class Game implements Renderable {
         playerManager.actualPlayerMoved();
     }
 
-    public Player winner() {
-        return playerManager.winnerById(winnerId());
+    private static Label error(String message) {
+        return new Label(message, Color.RED_BOLD);
     }
 
-    public String winnerId() {
-        return board.getMountain().winnerId();
+    private static Label winnerLabel(Player winner) {
+        return new Label(format("The winner is: %s bananas: %s!", winner.accept(RENDERER_VISITOR), winner.getBananas()), winner.getColor());
+    }
+
+    private static void render(Renderable renderable) {
+        System.out.println(renderable.accept(RENDERER_VISITOR));
     }
 }
