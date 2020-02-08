@@ -11,17 +11,12 @@ public class RandomMovementStrategy implements MovementStrategy {
 
     @Override
     public Movement next(Collection<Integer> availableCards) {
-        int card = availableCards.stream()
+        int stepCount = availableCards.stream()
                 .skip((int) (availableCards.size() * Math.random()))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("Cannot generate random step!"));
 
+        Direction direction = ThreadLocalRandom.current().nextBoolean() ? Direction.RIGHT : Direction.LEFT;
 
-        Direction direction;
-        if (ThreadLocalRandom.current().nextBoolean()) {
-            direction = Direction.RIGHT;
-        } else {
-            direction = Direction.LEFT;
-        }
-        return new Movement(card, direction);
+        return new Movement(stepCount, direction);
     }
 }
