@@ -25,7 +25,7 @@ public class Board implements Renderable {
     final Map<String, Integer> playerLocation;
 
     public void step(Player player, Movement movement) {
-        if (player.getCards().contains(movement.getCard())) {
+        if (player.getCards().contains(movement.getCount())) {
             move(player, findEmptyLocation(location(player), movement));
         } else {
             throw new IllegalStepException("Step has been already played!");
@@ -34,9 +34,9 @@ public class Board implements Renderable {
 
     private int findEmptyLocation(int startingLocation, Movement movement) {
         if (RIGHT == movement.getDirection()) {
-            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i <= 12, i -> ++i);
+            return findEmptyLocationInDirection(startingLocation, movement.getCount(), i -> i <= 12, i -> ++i);
         } else if (LEFT == movement.getDirection()) {
-            return findEmptyLocationInDirection(startingLocation, movement.getCard(), i -> i >= 0, i -> --i);
+            return findEmptyLocationInDirection(startingLocation, movement.getCount(), i -> i >= 0, i -> --i);
         }
         throw new IllegalArgumentException("Illegal direction!");
     }

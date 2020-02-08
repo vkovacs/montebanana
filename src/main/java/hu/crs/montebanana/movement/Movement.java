@@ -6,6 +6,6 @@ import lombok.Value;
 @Value
 @Getter
 public class Movement {
-    private int card;
+    private int count;
     private Direction direction;
 }
