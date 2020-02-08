@@ -5,7 +5,7 @@ import hu.crs.montebanana.movement.Movement;
 import hu.crs.montebanana.movement.strategy.NoOpMovementStrategy;
 import hu.crs.montebanana.player.Player;
 import org.junit.Test;
-import tool.Color;
+import hu.crs.montebanana.rendering.Color;
 
 import java.util.HashMap;
 import java.util.Map;

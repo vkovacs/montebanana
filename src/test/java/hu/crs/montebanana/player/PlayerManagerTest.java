@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import tool.Color;
+import hu.crs.montebanana.rendering.Color;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

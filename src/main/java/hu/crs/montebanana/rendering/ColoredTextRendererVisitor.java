@@ -2,7 +2,6 @@ package hu.crs.montebanana.rendering;
 
 import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.player.Player;
-import tool.Color;
 
 public class ColoredTextRendererVisitor extends TextRendererVisitor implements RendererVisitor {
 

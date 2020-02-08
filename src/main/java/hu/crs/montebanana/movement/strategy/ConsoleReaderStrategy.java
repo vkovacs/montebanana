@@ -4,7 +4,7 @@ import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
 import hu.crs.montebanana.player.MovementStrategy;
 import hu.crs.montebanana.rendering.Label;
-import tool.Color;
+import hu.crs.montebanana.rendering.Color;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;

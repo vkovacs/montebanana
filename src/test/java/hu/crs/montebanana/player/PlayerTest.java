@@ -2,7 +2,7 @@ package hu.crs.montebanana.player;
 
 import hu.crs.montebanana.movement.strategy.NoOpMovementStrategy;
 import org.junit.Test;
-import tool.Color;
+import hu.crs.montebanana.rendering.Color;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;

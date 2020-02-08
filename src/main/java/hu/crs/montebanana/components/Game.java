@@ -6,7 +6,7 @@ import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
-import tool.Color;
+import hu.crs.montebanana.rendering.Color;
 
 import java.util.HashMap;
 

@@ -6,7 +6,7 @@ import hu.crs.montebanana.movement.strategy.RandomMovementStrategy;
 import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.RendererVisitor;
-import tool.Color;
+import hu.crs.montebanana.rendering.Color;
 
 public class App {
 

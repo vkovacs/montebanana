@@ -1,4 +1,4 @@
-package tool;
+package hu.crs.montebanana.rendering;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

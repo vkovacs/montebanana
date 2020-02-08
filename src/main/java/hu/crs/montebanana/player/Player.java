@@ -7,7 +7,7 @@ import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import tool.Color;
+import hu.crs.montebanana.rendering.Color;
 
 import java.util.Arrays;
 import java.util.HashSet;
