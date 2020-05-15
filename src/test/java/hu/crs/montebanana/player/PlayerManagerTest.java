@@ -3,23 +3,19 @@ package hu.crs.montebanana.player;
 import hu.crs.montebanana.movement.strategy.NoOpMovementStrategy;
 import hu.crs.montebanana.player.exception.PlayerColorException;
 import hu.crs.montebanana.player.exception.TooManyRegisteredPlayerException;
-import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import hu.crs.montebanana.rendering.Color;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PlayerManagerTest {
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     PlayerManager playerManager = new PlayerManager();
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         playerManager.reset();
     }
@@ -34,10 +30,7 @@ public class PlayerManagerTest {
 
     @Test
     public void getDefaultActualPlayerWithoutRegisteredPlayer() {
-        expectedException.expect(NoSuchPlayerException.class);
-        expectedException.expectMessage("No player is registered!");
-
-        playerManager.actualPlayer();
+        assertThrows(NoSuchPlayerException.class, () -> playerManager.actualPlayer(), "No player is registered!");
     }
 
     @Test
@@ -51,11 +44,7 @@ public class PlayerManagerTest {
 
     @Test
     public void getDefaultActualPlayerMovedWhenNoPlayerIsRegisteredReturnsException() {
-        expectedException.expect(NoSuchPlayerException.class);
-        expectedException.expectMessage("No player is registered!");
-
-        playerManager.actualPlayerMoved();
-
+        assertThrows(NoSuchPlayerException.class, () -> playerManager.actualPlayerMoved(), "No player is registered!");
     }
 
     @Test
@@ -83,13 +72,11 @@ public class PlayerManagerTest {
 
     @Test
     public void afterResetNoPlayerIsRegistered() {
-        expectedException.expect(NoSuchPlayerException.class);
-        expectedException.expectMessage("No player is registered!");
-
         Player player0 = new Player(Color.BLUE, new NoOpMovementStrategy());
         playerManager.register(player0);
         playerManager.reset();
-        playerManager.actualPlayer();
+
+        assertThrows(NoSuchPlayerException.class, () -> playerManager.actualPlayer(), "No player is registered!");
     }
 
     @Test
@@ -127,9 +114,6 @@ public class PlayerManagerTest {
 
     @Test
     public void maximumRegisteredUserCountIsFour() {
-        expectedException.expect(TooManyRegisteredPlayerException.class);
-        expectedException.expectMessage("Too many registered player!");
-
         Player player0 = new Player(Color.BLUE, new NoOpMovementStrategy());
         Player player1 = new Player(Color.RED, new NoOpMovementStrategy());
         Player player2 = new Player(Color.GREEN, new NoOpMovementStrategy());
@@ -139,18 +123,17 @@ public class PlayerManagerTest {
         playerManager.register(player1);
         playerManager.register(player2);
         playerManager.register(player3);
-        playerManager.register(player4);
+
+        assertThrows(TooManyRegisteredPlayerException.class, () -> playerManager.register(player4), "Too many registered player!");
     }
 
     @Test
     public void playersMustHaveDifferentColors() {
-        expectedException.expect(PlayerColorException.class);
-        expectedException.expectMessage("Two player cannot have the same color!");
-
         Player player0 = new Player(Color.BLUE, new NoOpMovementStrategy());
         Player player1 = new Player(Color.BLUE, new NoOpMovementStrategy());
         playerManager.register(player0);
-        playerManager.register(player1);
+
+        assertThrows(PlayerColorException.class, () -> playerManager.register(player1), "Two player cannot have the same color!");
 
     }
 }

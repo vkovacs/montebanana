@@ -1,12 +1,12 @@
 package hu.crs.montebanana.player;
 
 import hu.crs.montebanana.movement.strategy.NoOpMovementStrategy;
-import org.junit.Test;
 import hu.crs.montebanana.rendering.Color;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
 
 public class PlayerTest {
 

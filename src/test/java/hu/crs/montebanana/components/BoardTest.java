@@ -4,20 +4,21 @@ import hu.crs.montebanana.movement.IllegalLocationException;
 import hu.crs.montebanana.movement.Movement;
 import hu.crs.montebanana.movement.strategy.NoOpMovementStrategy;
 import hu.crs.montebanana.player.Player;
-import org.junit.Test;
 import hu.crs.montebanana.rendering.Color;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static hu.crs.montebanana.movement.Direction.LEFT;
 import static hu.crs.montebanana.movement.Direction.RIGHT;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BoardTest {
 
-    @Test(expected = IllegalLocationException.class)
+    @Test
     public void findNextEmptyLocationIllegalLeftStepFromStartingPosition() {
         Player player = new Player(Color.RED, new NoOpMovementStrategy());
         Player[] players = new Player[13];
@@ -26,10 +27,10 @@ public class BoardTest {
         playerLocation.put(player.getId(), -1);
         Board board = new Board(players, playerLocation);
 
-        board.step(player, new Movement(1, LEFT));
+        assertThrows(IllegalLocationException.class, () -> board.step(player, new Movement(1, LEFT)));
     }
 
-    @Test(expected = IllegalLocationException.class)
+    @Test
     public void findNextEmptyLocationIllegalRightStepFromEndingPosition() {
         Player player = new Player(Color.RED, new NoOpMovementStrategy());
         Player[] players = new Player[13];
@@ -38,7 +39,7 @@ public class BoardTest {
         playerLocation.put(player.getId(), 12);
         Board board = new Board(players, playerLocation);
 
-        board.step(player, new Movement(1, RIGHT));
+        assertThrows(IllegalLocationException.class, () -> board.step(player, new Movement(1, RIGHT)));
     }
 
     @Test
