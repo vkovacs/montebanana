@@ -7,26 +7,16 @@ import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.rendering.Color;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.RendererVisitor;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
-@SpringBootApplication
-public class MonteBanana implements ApplicationRunner {
-
+@Component
+public class MonteBanana {
     public static final RendererVisitor RENDERER_VISITOR = new ColoredTextRendererVisitor();
     private final Game game = new Game();
 
-    public static void main(String[] args) {
-        SpringApplication.run(MonteBanana.class, args);
-    }
-
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        MonteBanana monteBanana = new MonteBanana();
-        monteBanana.init();
-        monteBanana.start();
+    public void go() {
+        init();
+        start();
     }
 
     private void init() {

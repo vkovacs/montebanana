@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import static hu.crs.montebanana.MonteBanana.RENDERER_VISITOR;
 
+
 public class ConsoleReaderStrategy implements MovementStrategy {
     public Movement next(Collection<Integer> availableCards) {
         Scanner in = new Scanner(System.in);
