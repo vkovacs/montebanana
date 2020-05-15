@@ -3,10 +3,12 @@ package hu.crs.montebanana.player;
 import hu.crs.montebanana.player.exception.PlayerColorException;
 import hu.crs.montebanana.player.exception.TooManyRegisteredPlayerException;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PlayerManager {
     @Getter
     List<Player> players = new ArrayList<>();

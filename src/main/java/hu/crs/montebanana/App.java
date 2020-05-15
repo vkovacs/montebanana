@@ -1,5 +1,6 @@
 package hu.crs.montebanana;
 
+import hu.crs.montebanana.game.MonteBanana;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -16,7 +17,7 @@ public class App implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        monteBanana.go();
+    public void run(ApplicationArguments args) {
+        monteBanana.start();
     }
 }

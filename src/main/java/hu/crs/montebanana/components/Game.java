@@ -2,21 +2,23 @@ package hu.crs.montebanana.components;
 
 import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.player.PlayerManager;
+import hu.crs.montebanana.rendering.Color;
 import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.Renderable;
 import hu.crs.montebanana.rendering.RendererVisitor;
 import lombok.Getter;
-import hu.crs.montebanana.rendering.Color;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-
-import static hu.crs.montebanana.MonteBanana.RENDERER_VISITOR;
+import static hu.crs.montebanana.game.MonteBanana.RENDERER_VISITOR;
 import static java.lang.String.format;
 
+@Component
+@RequiredArgsConstructor
 public class Game implements Renderable {
     @Getter
-    private Board board = new Board(new Player[13], new HashMap<>());
-    private PlayerManager playerManager = new PlayerManager();
+    private final Board board;
+    private final PlayerManager playerManager;
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void start() {

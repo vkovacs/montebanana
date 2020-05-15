@@ -6,7 +6,7 @@ import hu.crs.montebanana.player.MovementStrategy;
 
 import java.util.Collection;
 import java.util.concurrent.ThreadLocalRandom;
-
+//TODO: do not render movement error in case randomly chosen movement results in an incorrect position
 public class RandomMovementStrategy implements MovementStrategy {
 
     @Override
