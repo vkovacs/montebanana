@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static hu.crs.montebanana.App.RENDERER_VISITOR;
+import static hu.crs.montebanana.MonteBanana.RENDERER_VISITOR;
 
 public class ConsoleReaderStrategy implements MovementStrategy {
     public Movement next(Collection<Integer> availableCards) {

@@ -4,19 +4,29 @@ import hu.crs.montebanana.components.Game;
 import hu.crs.montebanana.movement.strategy.ConsoleReaderStrategy;
 import hu.crs.montebanana.movement.strategy.RandomMovementStrategy;
 import hu.crs.montebanana.player.Player;
+import hu.crs.montebanana.rendering.Color;
 import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
 import hu.crs.montebanana.rendering.RendererVisitor;
-import hu.crs.montebanana.rendering.Color;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class App {
+@SpringBootApplication
+public class MonteBanana implements ApplicationRunner {
 
     public static final RendererVisitor RENDERER_VISITOR = new ColoredTextRendererVisitor();
-    private Game game = new Game();
+    private final Game game = new Game();
 
     public static void main(String[] args) {
-        App app = new App();
-        app.init();
-        app.start();
+        SpringApplication.run(MonteBanana.class, args);
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        MonteBanana monteBanana = new MonteBanana();
+        monteBanana.init();
+        monteBanana.start();
     }
 
     private void init() {

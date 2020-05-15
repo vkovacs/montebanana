@@ -10,7 +10,7 @@ import hu.crs.montebanana.rendering.Color;
 
 import java.util.HashMap;
 
-import static hu.crs.montebanana.App.RENDERER_VISITOR;
+import static hu.crs.montebanana.MonteBanana.RENDERER_VISITOR;
 import static java.lang.String.format;
 
 public class Game implements Renderable {
