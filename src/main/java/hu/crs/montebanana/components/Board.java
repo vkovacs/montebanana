@@ -25,11 +25,29 @@ public class Board implements Renderable {
     final Map<String, Integer> playerLocation;
 
     public void step(Player player, Movement movement) {
-        if (player.getCards().contains(movement.getCount())) {
+        if (hasCard(player, movement)) {
             move(player, findEmptyLocation(location(player), movement));
         } else {
             throw new IllegalStepException("Step has been already played!");
         }
+    }
+
+    public boolean isValidMovement(Player player, Movement movement) {
+        if (!hasCard(player, movement)) {
+            return false;
+        }
+
+        try {
+            findEmptyLocation(location(player), movement);
+        } catch (IllegalStepException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean hasCard(Player player, Movement movement) {
+        return player.getCards().contains(movement.getCount());
     }
 
     private int findEmptyLocation(int startingLocation, Movement movement) {
