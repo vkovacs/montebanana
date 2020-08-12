@@ -70,6 +70,6 @@ public class Player implements Renderable {
     }
 
     private Movement next(Board board) {
-        return movementStrategy.next(board, cards);
+        return movementStrategy.next(board, this);
     }
 }

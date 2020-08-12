@@ -4,6 +4,7 @@ import hu.crs.montebanana.components.Board;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
 import hu.crs.montebanana.player.MovementStrategy;
+import hu.crs.montebanana.player.Player;
 import hu.crs.montebanana.rendering.Label;
 import hu.crs.montebanana.rendering.Color;
 
@@ -15,9 +16,9 @@ import static hu.crs.montebanana.game.MonteBanana.RENDERER_VISITOR;
 
 
 public class ConsoleReaderStrategy implements MovementStrategy {
-    public Movement next(Board board, Collection<Integer> availableCards) {
+    public Movement next(Board board, Player player) {
         Scanner in = new Scanner(System.in);
-        return readMovement(in, availableCards);
+        return readMovement(in, player.getCards());
     }
 
     private Movement readMovement(Scanner in, Collection<Integer> availableCards) {
