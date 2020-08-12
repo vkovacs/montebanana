@@ -60,7 +60,7 @@ public class Player implements Renderable {
     }
 
     public void step(Board board) {
-        Movement movement = next();
+        Movement movement = next(board);
 
         if (movement.getCount() == lastCard) throw new IllegalStepException("Cannot use the same card as the previous player!");
 
@@ -69,7 +69,7 @@ public class Player implements Renderable {
         lastCard = movement.getCount();
     }
 
-    private Movement next() {
-        return movementStrategy.next(cards);
+    private Movement next(Board board) {
+        return movementStrategy.next(board, cards);
     }
 }

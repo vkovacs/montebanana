@@ -1,5 +1,6 @@
 package hu.crs.montebanana.movement.strategy;
 
+import hu.crs.montebanana.components.Board;
 import hu.crs.montebanana.movement.Direction;
 import hu.crs.montebanana.movement.Movement;
 import hu.crs.montebanana.player.MovementStrategy;
@@ -14,9 +15,9 @@ import static hu.crs.montebanana.game.MonteBanana.RENDERER_VISITOR;
 
 
 public class ConsoleReaderStrategy implements MovementStrategy {
-    public Movement next(Collection<Integer> availableCards) {
+    public Movement next(Board board, Collection<Integer> availableCards) {
         Scanner in = new Scanner(System.in);
-        return readMovement(in,availableCards);
+        return readMovement(in, availableCards);
     }
 
     private Movement readMovement(Scanner in, Collection<Integer> availableCards) {
@@ -39,6 +40,7 @@ public class ConsoleReaderStrategy implements MovementStrategy {
             }
         }
     }
+
     private String error(String message) {
         return new Label(message, Color.RED_BOLD).accept(RENDERER_VISITOR);
     }
