@@ -1,12 +1,12 @@
 package hu.crs.montebanana.game;
 
-import hu.crs.montebanana.components.Game;
-import hu.crs.montebanana.movement.strategy.ConsoleReaderStrategy;
-import hu.crs.montebanana.movement.strategy.RandomMovementStrategy;
-import hu.crs.montebanana.player.Player;
-import hu.crs.montebanana.rendering.Color;
-import hu.crs.montebanana.rendering.ColoredTextRendererVisitor;
-import hu.crs.montebanana.rendering.RendererVisitor;
+import hu.crs.montebanana.game.components.Game;
+import hu.crs.montebanana.game.movement.strategy.ConsoleReaderStrategy;
+import hu.crs.montebanana.game.movement.strategy.RandomMovementStrategy;
+import hu.crs.montebanana.game.player.Player;
+import hu.crs.montebanana.game.rendering.Color;
+import hu.crs.montebanana.game.rendering.visitor.ColoredTextRendererVisitor;
+import hu.crs.montebanana.game.rendering.visitor.RendererVisitor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
