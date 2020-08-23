@@ -1,8 +1,8 @@
 package hu.crs.montebanana.game.components;
 
+import hu.crs.montebanana.game.movement.Movement;
 import hu.crs.montebanana.game.movement.exception.IllegalLocationException;
 import hu.crs.montebanana.game.movement.exception.IllegalStepException;
-import hu.crs.montebanana.game.movement.Movement;
 import hu.crs.montebanana.game.player.Player;
 import hu.crs.montebanana.game.rendering.visitor.Renderable;
 import hu.crs.montebanana.game.rendering.visitor.RendererVisitor;
@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -98,12 +99,17 @@ public class Board implements Renderable {
     }
 
     void registerPlayer(Player player) {
-        playerLocation.put(player.getId(), -1);
+        resetPlayerLocation(player);
     }
 
-    void reset() {
+    void reset(List<Player> players) {
         Arrays.fill(steps, null);
         playerLocation.clear();
+        players.forEach(this::resetPlayerLocation);
+    }
+
+    private void resetPlayerLocation(Player player) {
+        playerLocation.put(player.getId(), -1);
     }
 
     @Override

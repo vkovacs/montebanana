@@ -47,7 +47,7 @@ public class Game implements Renderable {
 
             Player winner = determineAndHandleWinner();
             render(winnerLabel(winner));
-            board.reset();
+            board.reset(playerManager.getPlayers());
         }
     }
 
