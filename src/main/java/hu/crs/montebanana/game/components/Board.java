@@ -39,7 +39,7 @@ public class Board implements Renderable {
 
         try {
             findEmptyLocation(location(player), movement);
-        } catch (IllegalStepException e) {
+        } catch (IllegalLocationException e) {
             return false;
         }
 

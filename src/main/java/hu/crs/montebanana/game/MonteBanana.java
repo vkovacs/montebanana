@@ -18,7 +18,7 @@ public class MonteBanana {
     private final Game game;
 
     public void start() {
-        game.registerPlayer(new Player(Color.RED, new ConsoleReaderStrategy()));
+        game.registerPlayer(new Player(Color.YELLOW, new ConsoleReaderStrategy()));
         game.registerPlayer(new Player(Color.BLUE, new RandomMovementStrategy()));
         game.start();
     }
