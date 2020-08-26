@@ -19,6 +19,8 @@ public class Game implements Renderable {
     @Getter
     private final Board board;
     private final PlayerManager playerManager;
+    @Getter
+    private int lastPlayedCard;
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void start() {
@@ -31,7 +33,7 @@ public class Game implements Renderable {
                 render(this);
 
                 try {
-                    actualPlayer.step(board);
+                    lastPlayedCard = actualPlayer.step(board, lastPlayedCard);
                 } catch (Exception e) {
                     render(error(e.getMessage()));
                     System.out.println();

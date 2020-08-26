@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MonteBanana {
-    //TODO: make a spring bean
     public static final RendererVisitor RENDERER_VISITOR = new ColoredTextRendererVisitor();
     private final Game game;
 

@@ -23,6 +23,8 @@ public class TextRendererVisitor implements RendererVisitor {
     public String visitGame(Game game) {
         return format("Available steps: %s", game.actualPlayer().getCards())
                 + System.lineSeparator() +
+                format("Last played card: %d", game.getLastPlayedCard())
+                + System.lineSeparator() +
                 visitBoard(game.getBoard());
     }
 

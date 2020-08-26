@@ -25,8 +25,6 @@ public class Player implements Renderable {
     private final Color color;
     private final MovementStrategy movementStrategy;
     private int bananas = 0;
-    @Getter
-    private int lastCard = -1;
 
     void removeCard(Integer cardNumber) {
         cards.remove(cardNumber);
@@ -40,7 +38,6 @@ public class Player implements Renderable {
         for (int i = 1; i < 6; i++) {
             cards.add(i);
         }
-        lastCard = -1;
     }
 
     public Set<Integer> getCards() {
@@ -60,7 +57,7 @@ public class Player implements Renderable {
         return rendererVisitor.visitPlayer(this);
     }
 
-    public void step(Board board) {
+    public int step(Board board, int lastCard) {
         Movement movement = next(board);
 
         if (movement.getCount() == lastCard) throw new IllegalStepException("Cannot use the same card as the previous player!");
@@ -68,6 +65,7 @@ public class Player implements Renderable {
         board.step(this, movement);
         cards.remove(movement.getCount());
         lastCard = movement.getCount();
+        return lastCard;
     }
 
     private Movement next(Board board) {
