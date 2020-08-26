@@ -10,6 +10,8 @@ import hu.crs.montebanana.game.rendering.visitor.RendererVisitor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
+
 @Component
 @RequiredArgsConstructor
 public class MonteBanana {
@@ -19,6 +21,19 @@ public class MonteBanana {
     public void start() {
         game.registerPlayer(new Player(Color.YELLOW, new ConsoleReaderStrategy()));
         game.registerPlayer(new Player(Color.BLUE, new RandomMovementStrategy()));
-        game.start();
+        try {
+            game.start();
+        } catch (ExitGameException e) {
+            game.getPlayerManager().getPlayers()
+                    .forEach(p -> {
+                        System.out.println(RENDERER_VISITOR.visitPlayer(p) + " bananas: " + p.getBananas());
+                    });
+            System.out.println("Winner of the game: " + RENDERER_VISITOR.visitPlayer(
+                    game.getPlayerManager()
+                            .getPlayers()
+                            .stream()
+                            .max(Comparator.comparingInt(Player::getBananas)
+                            ).orElseThrow()));
+        }
     }
 }

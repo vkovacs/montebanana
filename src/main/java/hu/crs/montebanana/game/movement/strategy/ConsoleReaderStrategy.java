@@ -1,5 +1,6 @@
 package hu.crs.montebanana.game.movement.strategy;
 
+import hu.crs.montebanana.game.ExitGameException;
 import hu.crs.montebanana.game.components.Board;
 import hu.crs.montebanana.game.movement.Direction;
 import hu.crs.montebanana.game.movement.Movement;
@@ -35,8 +36,7 @@ public class ConsoleReaderStrategy implements MovementStrategy {
             } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
                 System.out.println(error("Incorrect input! Try again!"));
             } catch (NoSuchElementException e) {
-                System.out.println("Bye!");
-                System.exit(0);
+                throw new ExitGameException();
             }
         }
     }

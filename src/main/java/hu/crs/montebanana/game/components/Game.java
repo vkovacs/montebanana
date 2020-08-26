@@ -1,5 +1,6 @@
 package hu.crs.montebanana.game.components;
 
+import hu.crs.montebanana.game.ExitGameException;
 import hu.crs.montebanana.game.player.Player;
 import hu.crs.montebanana.game.player.PlayerManager;
 import hu.crs.montebanana.game.rendering.Color;
@@ -18,9 +19,11 @@ import static java.lang.String.format;
 public class Game implements Renderable {
     @Getter
     private final Board board;
+    @Getter
     private final PlayerManager playerManager;
     @Getter
     private int lastPlayedCard;
+    private int round;
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void start() {
@@ -28,6 +31,9 @@ public class Game implements Renderable {
 
         while (true) {
             newTurn();
+            System.out.println("==========");
+            System.out.println("Round: " + round);
+            System.out.println("==========");
 
             while (playersHaveSteps()) {
                 render(this);
@@ -35,6 +41,8 @@ public class Game implements Renderable {
                 try {
                     lastPlayedCard = actualPlayer.step(board, lastPlayedCard);
                 } catch (Exception e) {
+                    if (e instanceof ExitGameException) throw e;
+
                     render(error(e.getMessage()));
                     System.out.println();
                     continue;
@@ -47,16 +55,15 @@ public class Game implements Renderable {
 
             render(this);
 
-            Player winner = determineAndHandleWinner();
+            Player winner = determineAndHandleRoundWinner();
             render(winnerLabel(winner));
-            board.reset(playerManager.getPlayers());
         }
     }
 
-    private Player determineAndHandleWinner() {
-        Player winner = playerManager.winnerById(board.winnerId());
-        winner.receiveBanana();
-        return winner;
+    private Player determineAndHandleRoundWinner() {
+        Player roundWinner = playerManager.winnerById(board.winnerId());
+        roundWinner.receiveBanana();
+        return roundWinner;
     }
 
     @Override
@@ -75,6 +82,8 @@ public class Game implements Renderable {
 
     public void newTurn() {
         playerManager.newTurn();
+        board.reset(playerManager.getPlayers());
+        round++;
     }
 
     public boolean playersHaveSteps() {
@@ -90,7 +99,7 @@ public class Game implements Renderable {
     }
 
     private static Label winnerLabel(Player winner) {
-        return new Label(format("The winner is: %s bananas: %s!", winner.accept(RENDERER_VISITOR), winner.getBananas()), winner.getColor());
+        return new Label(format("The winner of the round is: %s bananas: %s!", winner.accept(RENDERER_VISITOR), winner.getBananas()), winner.getColor());
     }
 
     private static void render(Renderable renderable) {
