@@ -1,17 +1,16 @@
 package hu.crs.montebanana.game.player;
 
 import hu.crs.montebanana.game.components.Board;
-import hu.crs.montebanana.game.movement.exception.IllegalStepException;
 import hu.crs.montebanana.game.movement.Movement;
+import hu.crs.montebanana.game.movement.exception.IllegalStepException;
 import hu.crs.montebanana.game.movement.strategy.MovementStrategy;
+import hu.crs.montebanana.game.rendering.Color;
 import hu.crs.montebanana.game.rendering.visitor.Renderable;
 import hu.crs.montebanana.game.rendering.visitor.RendererVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import hu.crs.montebanana.game.rendering.Color;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -40,10 +39,6 @@ public class Player implements Renderable {
         }
     }
 
-    public Set<Integer> getCards() {
-        return new HashSet<>(cards);
-    }
-
     @Override
     public String toString() {
         return "Player{" +
@@ -60,7 +55,10 @@ public class Player implements Renderable {
     public int step(Board board, int lastCard) {
         Movement movement = next(board);
 
-        if (movement.getCount() == lastCard) throw new IllegalStepException("Cannot use the same card as the previous player!");
+        if (movement.getCount() == lastCard) {
+            if (cards.size() > 1)
+                throw new IllegalStepException("Cannot use the same card as the previous player!");
+        }
 
         board.step(this, movement);
         cards.remove(movement.getCount());

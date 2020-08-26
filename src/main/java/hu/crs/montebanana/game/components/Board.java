@@ -98,7 +98,7 @@ public class Board implements Renderable {
         throw new RuntimeException("No max entry is available!");
     }
 
-    void registerPlayer(Player player) {
+    public void registerPlayer(Player player) {
         resetPlayerLocation(player);
     }
 
