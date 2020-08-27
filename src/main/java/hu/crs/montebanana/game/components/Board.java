@@ -8,6 +8,7 @@ import hu.crs.montebanana.game.rendering.visitor.Renderable;
 import hu.crs.montebanana.game.rendering.visitor.RendererVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,9 @@ public class Board implements Renderable {
     @Getter
     private final Player[] steps;
     final Map<String, Integer> playerLocation;
+    @Getter
+    @Setter
+    private int lastPlayedCard;
 
     public void step(Player player, Movement movement) {
         if (hasCard(player, movement)) {

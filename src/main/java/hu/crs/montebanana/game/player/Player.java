@@ -52,18 +52,17 @@ public class Player implements Renderable {
         return rendererVisitor.visitPlayer(this);
     }
 
-    public int step(Board board, int lastCard) {
+    public void step(Board board) {
         Movement movement = next(board);
 
-        if (movement.getCount() == lastCard) {
+        if (movement.getCount() == board.getLastPlayedCard()) {
             if (cards.size() > 1)
                 throw new IllegalStepException("Cannot use the same card as the previous player!");
         }
 
         board.step(this, movement);
         cards.remove(movement.getCount());
-        lastCard = movement.getCount();
-        return lastCard;
+        board.setLastPlayedCard(movement.getCount());
     }
 
     private Movement next(Board board) {
