@@ -1,7 +1,7 @@
 package hu.crs.montebanana.game.rendering.visitor;
 
 import hu.crs.montebanana.game.components.Game;
-import hu.crs.montebanana.game.components.Board;
+import hu.crs.montebanana.game.components.board.Board;
 import hu.crs.montebanana.game.player.Player;
 import hu.crs.montebanana.game.rendering.Label;
 

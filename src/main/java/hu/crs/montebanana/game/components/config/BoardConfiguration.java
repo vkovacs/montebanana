@@ -1,6 +1,6 @@
 package hu.crs.montebanana.game.components.config;
 
-import hu.crs.montebanana.game.components.Board;
+import hu.crs.montebanana.game.components.board.Board;
 import hu.crs.montebanana.game.player.Player;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

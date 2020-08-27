@@ -1,7 +1,7 @@
-package hu.crs.montebanana.game.components;
+package hu.crs.montebanana.game.components.board;
 
-import hu.crs.montebanana.game.movement.exception.IllegalLocationException;
 import hu.crs.montebanana.game.movement.Movement;
+import hu.crs.montebanana.game.movement.exception.IllegalLocationException;
 import hu.crs.montebanana.game.movement.strategy.NoOpMovementStrategy;
 import hu.crs.montebanana.game.player.Player;
 import hu.crs.montebanana.game.rendering.Color;

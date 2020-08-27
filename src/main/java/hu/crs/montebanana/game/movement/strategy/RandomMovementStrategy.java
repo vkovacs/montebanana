@@ -1,6 +1,7 @@
 package hu.crs.montebanana.game.movement.strategy;
 
-import hu.crs.montebanana.game.components.Board;
+import hu.crs.montebanana.game.components.board.Board;
+import hu.crs.montebanana.game.components.board.StepStatus;
 import hu.crs.montebanana.game.movement.Direction;
 import hu.crs.montebanana.game.movement.Movement;
 import hu.crs.montebanana.game.player.Player;
@@ -20,7 +21,7 @@ public class RandomMovementStrategy implements MovementStrategy {
 
             movement = new Movement(stepCount, direction);
 
-        } while(!board.isValidMovement(player, movement));
+        } while(board.isValidMovement(player, movement) != StepStatus.VALID);
 
         return movement;
     }

@@ -1,4 +1,4 @@
-package hu.crs.montebanana.game.components;
+package hu.crs.montebanana.game.components.board;
 
 import hu.crs.montebanana.game.movement.Movement;
 import hu.crs.montebanana.game.movement.exception.IllegalLocationException;
@@ -37,23 +37,23 @@ public class Board implements Renderable {
         }
     }
 
-    public boolean isValidMovement(Player player, Movement movement) {
+    public StepStatus isValidMovement(Player player, Movement movement) {
         if (!hasCard(player, movement)) {
-            return false;
+            return StepStatus.PLAYER_DON_T_HAVE_THAT_CARD;
         }
 
         if (movement.getCount() == lastPlayedCard) {
             if (player.getCards().size() > 1)
-                return false;
+                return StepStatus.PLAYED_SAME_CARD_AS_PREVIOUS_PLAYER_AND_NOT_PLAYERS_LAST_CARD;
         }
 
         try {
             findEmptyLocation(location(player), movement);
         } catch (IllegalLocationException e) {
-            return false;
+            return StepStatus.ILLEGAL_LOCATION;
         }
 
-        return true;
+        return StepStatus.VALID;
     }
 
     private boolean hasCard(Player player, Movement movement) {
@@ -99,7 +99,7 @@ public class Board implements Renderable {
         return playerLocation.get(player.getId());
     }
 
-    String winnerId() {
+    public String turnWinnerId() {
         Optional<Map.Entry<String, Integer>> maxValueEntry = playerLocation.entrySet().stream().max(Map.Entry.comparingByValue());
         if (maxValueEntry.isPresent()) {
             return maxValueEntry.get().getKey();
@@ -111,10 +111,11 @@ public class Board implements Renderable {
         resetPlayerLocation(player);
     }
 
-    void reset(List<Player> players) {
+    public void reset(List<Player> players) {
         Arrays.fill(steps, null);
         playerLocation.clear();
         players.forEach(this::resetPlayerLocation);
+        lastPlayedCard = 0;
     }
 
     private void resetPlayerLocation(Player player) {

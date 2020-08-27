@@ -1,6 +1,6 @@
 package hu.crs.montebanana.game.player;
 
-import hu.crs.montebanana.game.components.Board;
+import hu.crs.montebanana.game.components.board.Board;
 import hu.crs.montebanana.game.movement.strategy.ConstantMovementStrategy;
 import hu.crs.montebanana.game.movement.strategy.NoOpMovementStrategy;
 import hu.crs.montebanana.game.rendering.Color;

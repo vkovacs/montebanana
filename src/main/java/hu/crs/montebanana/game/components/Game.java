@@ -1,6 +1,7 @@
 package hu.crs.montebanana.game.components;
 
 import hu.crs.montebanana.game.ExitGameException;
+import hu.crs.montebanana.game.components.board.Board;
 import hu.crs.montebanana.game.player.Player;
 import hu.crs.montebanana.game.player.PlayerManager;
 import hu.crs.montebanana.game.rendering.Color;
@@ -60,7 +61,7 @@ public class Game implements Renderable {
     }
 
     private Player determineAndHandleRoundWinner() {
-        Player roundWinner = playerManager.winnerById(board.winnerId());
+        Player roundWinner = playerManager.winnerById(board.turnWinnerId());
         roundWinner.receiveBanana();
         return roundWinner;
     }

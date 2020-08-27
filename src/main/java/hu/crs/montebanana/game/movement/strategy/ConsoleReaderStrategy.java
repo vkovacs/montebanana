@@ -1,7 +1,8 @@
 package hu.crs.montebanana.game.movement.strategy;
 
 import hu.crs.montebanana.game.ExitGameException;
-import hu.crs.montebanana.game.components.Board;
+import hu.crs.montebanana.game.components.board.Board;
+import hu.crs.montebanana.game.components.board.StepStatus;
 import hu.crs.montebanana.game.movement.Direction;
 import hu.crs.montebanana.game.movement.Movement;
 import hu.crs.montebanana.game.player.Player;
@@ -31,9 +32,12 @@ public class ConsoleReaderStrategy implements MovementStrategy {
 
 
                 Movement movement = new Movement(stepCount, stepDirection);
-                boolean validMovement = board.isValidMovement(player, movement);
-                if (validMovement) {
-                    return movement;
+                StepStatus stepStatus = board.isValidMovement(player, movement);
+                switch (stepStatus) {
+                    case VALID : return movement;
+                    case PLAYER_DON_T_HAVE_THAT_CARD: System.out.println(error("Player don't have that card!")); break;
+                    case PLAYED_SAME_CARD_AS_PREVIOUS_PLAYER_AND_NOT_PLAYERS_LAST_CARD: System.out.println(error("Cannot play the same card as previous player!")); break;
+                    case ILLEGAL_LOCATION: System.out.println(error("Illegal location!")); break;
                 }
 
             } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
