@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static hu.crs.montebanana.game.movement.Direction.LEFT;
 import static hu.crs.montebanana.game.movement.Direction.RIGHT;
@@ -81,11 +82,7 @@ public class BoardTest {
 
     @Test
     void ifPlayerHasOneCardAndItIsTheSameAsLastPlayerCardItsAllowed() {
-        Player player = new Player(Color.RED, new ConstantMovementStrategy());
-        player.removeCard(2);
-        player.removeCard(3);
-        player.removeCard(4);
-        player.removeCard(5);
+        Player player = new Player(Color.RED, new ConstantMovementStrategy(), Set.of(1));
 
         Board board = new Board(new Player[13], new HashMap<>());
         board.registerPlayer(player);

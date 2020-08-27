@@ -7,24 +7,36 @@ import hu.crs.montebanana.game.rendering.Color;
 import hu.crs.montebanana.game.rendering.visitor.Renderable;
 import hu.crs.montebanana.game.rendering.visitor.RendererVisitor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Getter
+@ToString
 public class Player implements Renderable {
 
     private final String id = UUID.randomUUID().toString();
-    private final Set<Integer> cards = new TreeSet<>(Arrays.asList(1,2,3,4,5));
     private final Color color;
     private final MovementStrategy movementStrategy;
+    private final Set<Integer> cards;
     private int bananas = 0;
 
-    public void removeCard(Integer cardNumber) {
+    public Player(Color color, MovementStrategy movementStrategy) {
+        this.color = color;
+        this.movementStrategy = movementStrategy;
+        this.cards = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5));
+    }
+
+    public Player(Color color, MovementStrategy movementStrategy, Set<Integer> cards) {
+        this.color = color;
+        this.movementStrategy = movementStrategy;
+        this.cards = cards;
+    }
+
+    void removeCard(Integer cardNumber) {
         cards.remove(cardNumber);
     }
 
@@ -36,14 +48,6 @@ public class Player implements Renderable {
         for (int i = 1; i < 6; i++) {
             cards.add(i);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "color=" + color +
-                ", bananas=" + bananas +
-                '}';
     }
 
     @Override
