@@ -24,7 +24,7 @@ public class Player implements Renderable {
     private final MovementStrategy movementStrategy;
     private int bananas = 0;
 
-    void removeCard(Integer cardNumber) {
+    public void removeCard(Integer cardNumber) {
         cards.remove(cardNumber);
     }
 

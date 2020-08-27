@@ -2,9 +2,11 @@ package hu.crs.montebanana.game.components.board;
 
 import hu.crs.montebanana.game.movement.Movement;
 import hu.crs.montebanana.game.movement.exception.IllegalLocationException;
+import hu.crs.montebanana.game.movement.strategy.ConstantMovementStrategy;
 import hu.crs.montebanana.game.movement.strategy.NoOpMovementStrategy;
 import hu.crs.montebanana.game.player.Player;
 import hu.crs.montebanana.game.rendering.Color;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -66,5 +68,27 @@ public class BoardTest {
 
         board.step(player, new Movement(2, LEFT));
         assertThat(board.playerLocation.get(player.getId()), is(10));
+    }
+
+    @Test
+    void shouldThrowExceptionIfPlayerHasMultipleCardsAndTheChosenOneIsTheSameAsLastPlayerCard() {
+        Player player = new Player(Color.RED, new ConstantMovementStrategy());
+        Board board = new Board(new Player[13], new HashMap<>());
+        board.setLastPlayedCard(1);
+
+        Assertions.assertEquals(StepStatus.PLAYED_SAME_CARD_AS_PREVIOUS_PLAYER_AND_NOT_PLAYERS_LAST_CARD, board.isValidMovement(player, new Movement(1, RIGHT)));
+    }
+
+    @Test
+    void ifPlayerHasOneCardAndItIsTheSameAsLastPlayerCardItsAllowed() {
+        Player player = new Player(Color.RED, new ConstantMovementStrategy());
+        player.removeCard(2);
+        player.removeCard(3);
+        player.removeCard(4);
+        player.removeCard(5);
+
+        Board board = new Board(new Player[13], new HashMap<>());
+        board.registerPlayer(player);
+        Assertions.assertEquals(StepStatus.VALID, board.isValidMovement(player, new Movement(1, RIGHT)));
     }
 }
