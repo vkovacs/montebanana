@@ -2,7 +2,6 @@ package hu.crs.montebanana.game.player;
 
 import hu.crs.montebanana.game.components.Board;
 import hu.crs.montebanana.game.movement.Movement;
-import hu.crs.montebanana.game.movement.exception.IllegalStepException;
 import hu.crs.montebanana.game.movement.strategy.MovementStrategy;
 import hu.crs.montebanana.game.rendering.Color;
 import hu.crs.montebanana.game.rendering.visitor.Renderable;
@@ -54,11 +53,6 @@ public class Player implements Renderable {
 
     public void step(Board board) {
         Movement movement = next(board);
-
-        if (movement.getCount() == board.getLastPlayedCard()) {
-            if (cards.size() > 1)
-                throw new IllegalStepException("Cannot use the same card as the previous player!");
-        }
 
         board.step(this, movement);
         cards.remove(movement.getCount());

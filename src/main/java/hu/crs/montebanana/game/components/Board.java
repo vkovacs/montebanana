@@ -42,6 +42,11 @@ public class Board implements Renderable {
             return false;
         }
 
+        if (movement.getCount() == lastPlayedCard) {
+            if (player.getCards().size() > 1)
+                return false;
+        }
+
         try {
             findEmptyLocation(location(player), movement);
         } catch (IllegalLocationException e) {
